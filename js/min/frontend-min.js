@@ -1,0 +1,1 @@
+var generateTweets=function(){const e=falseTweetArr[Math.floor(Math.random()*falseTweetArr.length)];document.getElementById("fake-tweet").innerText="gam"};window.onload=function(){document.getElementById("generate-button").addEventListener("click",generateTweets)};

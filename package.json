@@ -1,0 +1,28 @@
+{
+  "name": "trumporfalse",
+  "version": "1.0.0",
+  "description": "Trump or False: A Markov Chain Gamesperiment",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "babel src -d lib"
+  },
+  "author": "Leo Langinger and Michael Hazani",
+  "license": "ISC",
+  "dependencies": {
+    "async": "^2.1.1",
+    "markovchain": "^1.0.2"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.16.0",
+    "babel-preset-es2015": "^6.16.0",
+    "babelify": "^7.3.0",
+    "browserify": "^13.1.0",
+    "gulp": "^3.9.1",
+    "gulp-babel": "^6.1.2",
+    "gulp-browserify": "^0.5.1",
+    "gulp-watch": "^4.3.10",
+    "vinyl-source-stream": "^1.1.0",
+    "watchify": "^3.7.0"
+  }
+}
