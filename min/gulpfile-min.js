@@ -1,1 +1,0 @@
-var gulp=require("gulp"),source=require("vinyl-source-stream"),babel=require("gulp-babel"),watch=require("gulp-watch"),browserify=require("gulp-browserify");gulp.task("new",function(){return watch("./js/app.js",function(){gulp.src("./js/app.js").pipe(babel()).pipe(browserify()).pipe(gulp.dest("dist/js"))})});
