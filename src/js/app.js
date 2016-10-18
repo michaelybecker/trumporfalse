@@ -2,9 +2,9 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { createStore, combineReducers } from "redux";
 import deepFreeze from "deepfreeze";
-// import Counter from "./Counter.js";
 import expect, { createSpy, spyOn, isSpy } from "expect";
-import TweetCard from "./TweetCard"
+import TweetCard from "./TweetCard";
+import Button from "./Button";
 import realTweetArray from "./data/realTweets";
 import fakeTweetArray from "./data/fakeTweets";
 
@@ -12,9 +12,69 @@ const ranNum = (max) => {
   return Math.floor(Math.random() * max)
 }
 
-const Button = ({ name, clickFunc }) => {
+const trumpApp = (state = [], action) => {
+  switch (action.type) {
+    case "TRUE_TWEET_CLICKED":
+      console.log(store.getState())
+
+      return [
+        ...state,
+        {
+          id: action.id,
+          isReal: action.isReal
+        }
+
+      ]
+      break;
+    case "FAKE_TWEET_CLICKED":
+      return {
+        // stuff
+      }
+    case "EMPTY_STATE":
+      state = undefined
+    default:
+      return state;
+  }
+}
+let idIndex = 0;
+const TestButton = () => {
   return (
-    <button onClick={clickFunc} >{name}</button>
+    <button
+      onClick={() => {
+        store.dispatch({
+          type: "TRUE_TWEET_CLICKED",
+          isReal: true,
+          id: idIndex++
+        })}
+      }
+    >
+      Test Button
+    </button>
+  )
+}
+
+const GetStateButton = () => {
+  return (
+    <button
+      onClick={() => {console.log(store.getState())}
+      }
+    >
+      log state
+    </button>
+  )
+}
+
+const EmptyStateButton = () => {
+  return (
+    <button
+      onClick={() => {
+        store.dispatch({
+          type: "EMPTY_STATE"
+        })}
+      }
+    >
+      empty state
+    </button>
   )
 }
 
@@ -67,6 +127,9 @@ class App extends React.Component {
 
     return (
       <div>
+        <TestButton />
+        <GetStateButton />
+        <EmptyStateButton />
         <Button
           name={"Button here"}
           clickFunc={this._newTweet}/>
@@ -84,6 +147,8 @@ class App extends React.Component {
   }
 }
 
+const store = createStore(trumpApp)
+
 const render = () => {
   ReactDOM.render(
     <App />,
@@ -92,3 +157,5 @@ const render = () => {
 }
 
 render();
+
+export { store }
