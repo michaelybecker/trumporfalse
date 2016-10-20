@@ -1,20 +1,49 @@
 import React from "react";
 // import { store } from "./app"
 
+const goodSites = [
+  "http://www.naacp.org/",
+  "https://www.hillaryclinton.com/",
+  "http://maldef.org/immigration/litigation/",
+  "https://www.plannedparenthood.org/",
+  "https://www.icrc.org/eng/resources/documents/misc/57jqgr.htm"
+]
+
 
 class TweetCard extends React.Component {
+
+  constructor(props){
+    super(props)
+    this._makeUrl = this._makeUrl.bind(this)
+  }
 
   componentDidMount() {
     const { store } = this.props;
     this.unsubscribe = store.subscribe(() => {
       this.forceUpdate()
     })
+
   }
+
+  componentWillUnmount() {
+    this.unsubscribe();
+  }
+
+  _makeUrl() {
+    if (this.props.content.hasOwnProperty("id_str")) {
+      return "https://twitter.com/realDonaldTrump/status/" + this.props.content.id_str
+    } else {
+      const goodSite = Math.floor(Math.random() * goodSites.length)
+      return goodSites[goodSite]
+    }
+  }
+
 
 
   render() {
     const {store} = this.props;
     const state = store.getState();
+    const url = this._makeUrl()
 
     const tweetClicked = () => {
       if (state.answerVisibility === "HIDE_ANSWERS") {
@@ -39,16 +68,9 @@ class TweetCard extends React.Component {
       }
     }
 
-
-
-    console.log("Tweetcard state: ")
+    console.log(this.props.content.isReal + " tweetcard state: ")
     console.log(state.answerVisibility)
     console.log("==================")
-
-    console.log("Background color state: ")
-    console.log(cardStyles)
-    console.log("==================")
-
 
     return (
       <div>
@@ -62,7 +84,9 @@ class TweetCard extends React.Component {
           <footer>
               <cite>@realDonaldTrump</cite>
           </footer>
-          <a href={this.props.url} target={"_blank"}>Link</a>
+          <a
+            href={url}
+            target={"_blank"}>Link</a>
         </blockquote>
       </div>
     )

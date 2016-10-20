@@ -1,12 +1,14 @@
 
 import React from "react";
 import ReactDOM from "react-dom";
+import ReactCSSTransitionGroup from "react-addons-css-transition-group"
 import { createStore, combineReducers } from "redux";
 import { Provider, connect } from "react-redux";
 import deepFreeze from "deepfreeze";
 import expect, { createSpy, spyOn, isSpy } from "expect";
 import TweetCard from "./TweetCard"
-import CreateFakeTweet from "./markovGenerator"
+import CreateFakeTweet from "./markovGenerator";
+import _ from "underscore"
 
 import Button from "./Button";
 import realTweetArray from "./data/realTweets";
@@ -16,40 +18,14 @@ const ranNum = (max) => {
   return Math.floor(Math.random() * max)
 }
 
-// const trumpApp = (state = [], action) => {
-//   switch (action.type) {
-//     case "TRUE_TWEET_CLICKED":
-//       console.log(store.getState())
-//
-//       return [
-//         ...state,
-//         {
-//           id: action.id,
-//           isReal: action.isReal
-//         }
-//
-//       ]
-//       break;
-//     case "FAKE_TWEET_CLICKED":
-//       return {
-//         // stuff
-//       }
-//     case "EMPTY_STATE":
-//       state = undefined
-//     default:
-//       return state;
-//   }
-// }
 
 const answerVisibility = (state = { answerVisibility: "HIDE_ANSWERS" }, action) => {
   switch (action.type) {
     case "SHOW_ANSWER":
-      console.log(state)
       return {
         answerVisibility: action.type
       }
     case "HIDE_ANSWERS":
-      console.log(state)
       return {
         answerVisibility: action.type
       }
@@ -78,54 +54,66 @@ const EmptyStateButton = () => {
   )
 }
 
-const goodSites = [
-  "http://www.naacp.org/",
-  "https://www.hillaryclinton.com/",
-  "http://maldef.org/immigration/litigation/",
-  "https://www.plannedparenthood.org/",
-  "https://www.icrc.org/eng/resources/documents/misc/57jqgr.htm"
-]
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      realTweetIndex: ranNum(3200),
-      fakeTweetIndex: ranNum(3200)
+      currentTweets: [
+        realTweetArray[ranNum(3200)],
+        CreateFakeTweet()
+      ]
     }
     this._newTweet = this._newTweet.bind(this);
-    this._makeUrl = this._makeUrl.bind(this);
+    this._addTweet = this._addTweet.bind(this);
+    this._displayCards = this._displayCards.bind(this);
   }
 
   _newTweet() {
     this.setState({
-      realTweetIndex: ranNum(3200),
-      fakeTweetIndex: ranNum(3200)
+      currentTweets: [
+        realTweetArray[ranNum(3200)],
+        CreateFakeTweet()
+      ]
     })
     this.props.store.dispatch({
       type: "HIDE_ANSWERS"
     })
   }
 
-
-
-  _makeUrl(tweetObject) {
-    if (tweetObject.hasOwnProperty("id_str")) {
-      console.log("makeurl called")
-      return "https://twitter.com/realDonaldTrump/status/" + tweetObject.id_str
-    } else {
-      const goodSite = Math.floor(Math.random() * goodSites.length)
-      console.log("goodSites index: " + goodSite)
-      return goodSites[goodSite]
-    }
-
+  _displayCards() {
+    return _.shuffle(this.state.currentTweets).map((tweet, index) => {
+      return (
+        <TweetCard
+        store={this.props.store}
+        content={tweet}
+        key={index}
+        id={index}
+        />
+      )
+    })
   }
 
+  _addTweet() {
+    this.setState({
+      currentTweets: [
+        ...this.state.currentTweets,
+        CreateFakeTweet()
+      ]
+    })
+  }
+
+
   render() {
-    console.log(realTweetArray[this.state.realTweetIndex])
-    console.log(fakeTweetArray[this.state.fakeTweetIndex])
+    console.log(this.state)
     const testStyle = {
       backgroundColor: "green"
+    }
+
+    const transitionOptions = {
+      transitionName: "fade",
+      transitionEnterTimeout: 5000,
+      transitionLeaveTimeout: 5000
     }
 
     return (
@@ -134,17 +122,13 @@ class App extends React.Component {
           name={"Button here"}
           clickFunc={this._newTweet}
         />
-        <TweetCard
-          store={this.props.store}
-          content={realTweetArray[this.state.realTweetIndex]}
-          url={this._makeUrl(realTweetArray[this.state.realTweetIndex])}
-          style={testStyle}
+        <Button
+          name="Add Tweets"
+          clickFunc={this._addTweet}
         />
-        <TweetCard
-          store={this.props.store}
-          content={CreateFakeTweet()}
-          url={this._makeUrl(fakeTweetArray[this.state.fakeTweetIndex])}
-          style={testStyle}/>
+        <ReactCSSTransitionGroup {...transitionOptions}>
+          {this._displayCards()}
+        </ReactCSSTransitionGroup>
       </div>
     )
   }

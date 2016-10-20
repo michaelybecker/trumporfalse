@@ -4,6 +4,11 @@ a {
   font-weight: normal;
 }
 
+button {
+  background-color: white;
+  color: black;
+}
+
 blockquote.twitter-tweet {
   display: inline-block;
   padding: 16px;
@@ -46,3 +51,23 @@ body {
   align-items: center;
   justify-content: center;
 }
+
+.fade-enter {
+  right: 100px;
+}
+
+.fade-enter-active {
+  right: 0px;
+  transition: 5s ease-in all;
+}
+/*
+<TweetCard
+  store={this.props.store}
+  content={this.state.currentTweets[0]}
+  style={testStyle}
+/>
+<TweetCard
+  store={this.props.store}
+  content={this.state.currentTweets[1]}
+  style={testStyle}/>
+*/
