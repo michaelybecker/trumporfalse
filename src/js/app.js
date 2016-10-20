@@ -2,6 +2,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { createStore, combineReducers } from "redux";
+import { Provider, connect } from "react-redux";
 import deepFreeze from "deepfreeze";
 import expect, { createSpy, spyOn, isSpy } from "expect";
 import TweetCard from "./TweetCard"
@@ -15,57 +16,53 @@ const ranNum = (max) => {
   return Math.floor(Math.random() * max)
 }
 
-const trumpApp = (state = [], action) => {
+// const trumpApp = (state = [], action) => {
+//   switch (action.type) {
+//     case "TRUE_TWEET_CLICKED":
+//       console.log(store.getState())
+//
+//       return [
+//         ...state,
+//         {
+//           id: action.id,
+//           isReal: action.isReal
+//         }
+//
+//       ]
+//       break;
+//     case "FAKE_TWEET_CLICKED":
+//       return {
+//         // stuff
+//       }
+//     case "EMPTY_STATE":
+//       state = undefined
+//     default:
+//       return state;
+//   }
+// }
+
+const answerVisibility = (state = { answerVisibility: "HIDE_ANSWERS" }, action) => {
   switch (action.type) {
-    case "TRUE_TWEET_CLICKED":
-      console.log(store.getState())
-
-      return [
-        ...state,
-        {
-          id: action.id,
-          isReal: action.isReal
-        }
-
-      ]
-      break;
-    case "FAKE_TWEET_CLICKED":
+    case "SHOW_ANSWER":
+      console.log(state)
       return {
-        // stuff
+        answerVisibility: action.type
       }
-    case "EMPTY_STATE":
-      state = undefined
+    case "HIDE_ANSWERS":
+      console.log(state)
+      return {
+        answerVisibility: action.type
+      }
     default:
       return state;
   }
-}
-let idIndex = 0;
-const TestButton = () => {
-  return (
-    <button
-      onClick={() => {
-        store.dispatch({
-          type: "TRUE_TWEET_CLICKED",
-          isReal: true,
-          id: idIndex++
-        })}
-      }
-    >
-      Test Button
-    </button>
-  )
+  console.log(store.getState())
 }
 
-const GetStateButton = () => {
-  return (
-    <button
-      onClick={() => {console.log(store.getState())}
-      }
-    >
-      log state
-    </button>
-  )
-}
+// const trumpAppReducers = combineReducers({
+//   trumpApp,
+//   answerVisibility
+// })
 
 const EmptyStateButton = () => {
   return (
@@ -105,6 +102,9 @@ class App extends React.Component {
       realTweetIndex: ranNum(3200),
       fakeTweetIndex: ranNum(3200)
     })
+    this.props.store.dispatch({
+      type: "HIDE_ANSWERS"
+    })
   }
 
 
@@ -130,18 +130,18 @@ class App extends React.Component {
 
     return (
       <div>
-        <TestButton />
-        <GetStateButton />
-        <EmptyStateButton />
         <Button
           name={"Button here"}
-          clickFunc={this._newTweet}/>
+          clickFunc={this._newTweet}
+        />
         <TweetCard
+          store={this.props.store}
           content={realTweetArray[this.state.realTweetIndex]}
           url={this._makeUrl(realTweetArray[this.state.realTweetIndex])}
           style={testStyle}
         />
         <TweetCard
+          store={this.props.store}
           content={CreateFakeTweet()}
           url={this._makeUrl(fakeTweetArray[this.state.fakeTweetIndex])}
           style={testStyle}/>
@@ -150,15 +150,15 @@ class App extends React.Component {
   }
 }
 
-const store = createStore(trumpApp)
+// const store = createStore(answerVisibility)
 
 const render = () => {
   ReactDOM.render(
-    <App />,
+    <App store={createStore(answerVisibility)} />,
     document.getElementById("root")
   )
 }
 
 render();
 
-export { store }
+// export { store }
