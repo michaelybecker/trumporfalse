@@ -38,11 +38,11 @@ const getTweets = (params) => {
             }
             getTweets(newParams);
         } else {
-            fs.appendFile('src/js/realTweets.js', JSON.stringify(tweetArray), (err) => {
+            fs.appendFile('src/js/realTweetsTest.js', JSON.stringify(tweetArray), (err) => {
                 if (err) throw err;
                 console.log("tweet saved!");
             })
-            fs.appendFile('rawTweetText.txt', textArray, (err) => {
+            fs.appendFile('rawTweetTextTest.txt', textArray, (err) => {
                 if (err) throw err;
                 console.log("tweet saved!");
             })

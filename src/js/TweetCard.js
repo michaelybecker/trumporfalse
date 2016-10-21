@@ -47,9 +47,20 @@ class TweetCard extends React.Component {
 
     const tweetClicked = () => {
       if (state.answerVisibility === "HIDE_ANSWERS") {
-        store.dispatch({
-          type: "SHOW_ANSWER"
-        })
+        if (this.props.content.isReal === true) {
+          store.dispatch({
+            type: "RIGHT_ANSWER"
+          })
+        } else {
+          store.dispatch({
+            type: "WRONG_ANSWER"
+          })
+        }
+        setTimeout(() => {
+          store.dispatch({
+            type: "NEW_TWEETS"
+          })
+        }, 1000)
       }
     }
 

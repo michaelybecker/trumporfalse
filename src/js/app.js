@@ -1,4 +1,4 @@
-
+// Libraries/plugins
 import React from "react";
 import ReactDOM from "react-dom";
 import ReactCSSTransitionGroup from "react-addons-css-transition-group"
@@ -6,10 +6,12 @@ import { createStore, combineReducers } from "redux";
 import { Provider, connect } from "react-redux";
 import deepFreeze from "deepfreeze";
 import expect, { createSpy, spyOn, isSpy } from "expect";
-import TweetCard from "./TweetCard"
 import CreateFakeTweet from "./markovGenerator";
 import _ from "underscore"
 
+// Our Components:
+import TweetCard from "./TweetCard"
+import ScoreCard from "./ScoreCard"
 import Button from "./Button";
 import realTweetArray from "./data/realTweets";
 import fakeTweetArray from "./data/fakeTweets";
@@ -17,17 +19,31 @@ import fakeTweetArray from "./data/fakeTweets";
 const ranNum = (max) => {
   return Math.floor(Math.random() * max)
 }
-
-
+let score = 0;
 const answerVisibility = (state = {
   answerVisibility: "HIDE_ANSWERS",
-  currentTweets: []
+  currentTweets: [],
+  score: 0
 }, action) => {
+
   switch (action.type) {
+    case "RIGHT_ANSWER":
+      return {
+        ...state,
+        answerVisibility: "SHOW_ANSWER",
+        score: ++score
+      }
+    case "WRONG_ANSWER":
+      return {
+        ...state,
+        answerVisibility: "SHOW_ANSWER",
+        score: --score
+      }
     case "SHOW_ANSWER":
       return {
         ...state,
-        answerVisibility: action.type
+        answerVisibility: action.type,
+        score: score++
       }
     case "HIDE_ANSWERS":
       return {
@@ -71,14 +87,13 @@ const EmptyStateButton = () => {
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-    }
+
     this.store = this.props.store;
-    this.props.store.dispatch({
+    this.store.dispatch({
       type: "NEW_TWEETS"
     })
-    this.unsubscribe = this.props.store.subscribe(() => {
-      console.log(this.props.store.getState())
+    this.unsubscribe = this.store.subscribe(() => {
+      console.log(this.store.getState())
       this.forceUpdate()
     })
 
@@ -89,7 +104,7 @@ class App extends React.Component {
 
 
   _tweets() {
-    return this.props.store.getState().currentTweets.map((tweet, index) => {
+    return this.store.getState().currentTweets.map((tweet, index) => {
       return (
         <TweetCard
           store={this.props.store}
@@ -112,11 +127,6 @@ class App extends React.Component {
 
 
   render() {
-    console.log(this.state)
-    const testStyle = {
-      backgroundColor: "green"
-    }
-
     const transitionOptions = {
       transitionName: "fade",
       transitionEnterTimeout: 5000,
@@ -124,20 +134,11 @@ class App extends React.Component {
     }
 
     return (
-      <div>
-        <Button
-          name={"Add store tweets"}
-          clickFunc={()=> {
-            this.props.store.dispatch({ type: "NEW_TWEETS" })
-          }}
-        />
-        <Button
-          name="Log Store"
-          clickFunc={() => {
-            console.log(this.props.store.getState())
-          }}
-        />
-        {this._tweets()}
+      <div className="rootDiv">
+        <ScoreCard score={this.store.getState().score} />
+        <div className="tweetDiv">
+          {this._tweets()}
+        </div>
       </div>
     )
   }
@@ -155,3 +156,16 @@ const render = () => {
 render();
 
 // export { store }
+
+// <Button
+//   name={"Add store tweets"}
+//   clickFunc={()=> {
+//     this.store.dispatch({ type: "NEW_TWEETS" })
+//   }}
+// />
+// <Button
+//   name="Log Store"
+//   clickFunc={() => {
+//     console.log(this.store.getState())
+//   }}
+// />
