@@ -25,21 +25,24 @@ const answerVisibility = (state = {
 }, action) => {
   switch (action.type) {
     case "SHOW_ANSWER":
-      return Object.assign({}, state, {
+      return {
+        ...state,
         answerVisibility: action.type
-      })
+      }
     case "HIDE_ANSWERS":
-      return Object.assign({}, state, {
+      return {
+        ...state,
         answerVisibility: action.type
-      })
+      }
     case "NEW_TWEETS":
-      return Object.assign({}, state, {
-        currentTweets: [
+      return {
+        ...state,
+        currentTweets: _.shuffle([
           realTweetArray[ranNum(3200)],
           CreateFakeTweet()
-        ],
+        ]),
         answerVisibility: "HIDE_ANSWERS"
-      })
+      }
     default:
       return state;
   }
@@ -70,6 +73,7 @@ class App extends React.Component {
     super(props);
     this.state = {
     }
+    this.store = this.props.store;
     this.props.store.dispatch({
       type: "NEW_TWEETS"
     })
@@ -77,28 +81,15 @@ class App extends React.Component {
       console.log(this.props.store.getState())
       this.forceUpdate()
     })
-    this._newTweet = this._newTweet.bind(this);
+
     this._addTweet = this._addTweet.bind(this);
     this._tweets = this._tweets.bind(this);
   }
 
-  _newTweet() {
-    // this.setState({
-    //   currentTweets: [
-    //     realTweetArray[ranNum(3200)],
-    //     CreateFakeTweet()
-    //   ]
-    // })
-    this.props.store.dispatch({
-      type: "NEW_TWEETS"
-    })
-    this.props.store.dispatch({
-      type: "HIDE_ANSWERS"
-    })
-  }
+
 
   _tweets() {
-    return _.shuffle(this.props.store.getState().currentTweets).map((tweet, index) => {
+    return this.props.store.getState().currentTweets.map((tweet, index) => {
       return (
         <TweetCard
           store={this.props.store}
@@ -146,9 +137,7 @@ class App extends React.Component {
             console.log(this.props.store.getState())
           }}
         />
-
-          {this._tweets()}
-
+        {this._tweets()}
       </div>
     )
   }

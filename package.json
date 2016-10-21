@@ -5,8 +5,8 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "watch-js": "watchify -v -e src/js/app.js -t [ babelify --presets [ es2015 react ] ] --debug -o dist/app.js",
-    "build-js": "browserify -v -e src/js/app.js -t [ babelify --presets [ es2015 react ] ] -o dist/app.js",
+    "watch-js": "watchify -v -e src/js/app.js -t [ babelify --presets [ es2015 react stage-2 ] ] --debug -o dist/app.js",
+    "build-js": "browserify -v -e src/js/app.js -t [ babelify --presets [ es2015 react stage-2 ] ] -o dist/app.js",
     "markov-watch": "watchify -v -e src/js/markovGenerator.js -t [ babelify --presets [ es2015 react ] ] -o dist/markovGenerator.js"
   },
   "author": "Leo Langinger & Michael Hazani",
@@ -26,19 +26,20 @@
     "underscore": "^1.8.3"
   },
   "devDependencies": {
-    "babel-cli": "^6.16.0",
     "babel": "^6.5.2",
+    "babel-cli": "^6.16.0",
     "babel-core": "^6.17.0",
     "babel-loader": "^6.2.5",
     "babel-preset-es2015": "^6.16.0",
     "babel-preset-react": "^6.16.0",
+    "babel-preset-stage-2": "^6.17.0",
     "babelify": "^7.3.0",
     "browserify": "^13.1.0",
+    "deepfreeze": "^2.0.0",
+    "expect": "^1.20.2",
+    "redux-devtools": "^3.3.1",
     "sassify": "^2.0.0",
     "watchify": "^3.7.0",
-    "webpack": "^1.13.2",
-    "redux-devtools": "^3.3.1",
-    "deepfreeze": "^2.0.0",
-    "expect": "^1.20.2"
+    "webpack": "^1.13.2"
   }
 }
