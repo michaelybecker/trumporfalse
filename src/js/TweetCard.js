@@ -73,7 +73,7 @@ class TweetCard extends React.Component {
     console.log("==================")
 
     return (
-      <div>
+      <div className="tweetCard">
         <blockquote
           className={"twitter-tweet"}
           style={cardStyles}

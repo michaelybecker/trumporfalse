@@ -19,20 +19,30 @@ const ranNum = (max) => {
 }
 
 
-const answerVisibility = (state = { answerVisibility: "HIDE_ANSWERS" }, action) => {
+const answerVisibility = (state = {
+  answerVisibility: "HIDE_ANSWERS",
+  currentTweets: []
+}, action) => {
   switch (action.type) {
     case "SHOW_ANSWER":
-      return {
+      return Object.assign({}, state, {
         answerVisibility: action.type
-      }
+      })
     case "HIDE_ANSWERS":
-      return {
+      return Object.assign({}, state, {
         answerVisibility: action.type
-      }
+      })
+    case "NEW_TWEETS":
+      return Object.assign({}, state, {
+        currentTweets: [
+          realTweetArray[ranNum(3200)],
+          CreateFakeTweet()
+        ],
+        answerVisibility: "HIDE_ANSWERS"
+      })
     default:
       return state;
   }
-  console.log(store.getState())
 }
 
 // const trumpAppReducers = combineReducers({
@@ -59,36 +69,42 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentTweets: [
-        realTweetArray[ranNum(3200)],
-        CreateFakeTweet()
-      ]
     }
+    this.props.store.dispatch({
+      type: "NEW_TWEETS"
+    })
+    this.unsubscribe = this.props.store.subscribe(() => {
+      console.log(this.props.store.getState())
+      this.forceUpdate()
+    })
     this._newTweet = this._newTweet.bind(this);
     this._addTweet = this._addTweet.bind(this);
-    this._displayCards = this._displayCards.bind(this);
+    this._tweets = this._tweets.bind(this);
   }
 
   _newTweet() {
-    this.setState({
-      currentTweets: [
-        realTweetArray[ranNum(3200)],
-        CreateFakeTweet()
-      ]
+    // this.setState({
+    //   currentTweets: [
+    //     realTweetArray[ranNum(3200)],
+    //     CreateFakeTweet()
+    //   ]
+    // })
+    this.props.store.dispatch({
+      type: "NEW_TWEETS"
     })
     this.props.store.dispatch({
       type: "HIDE_ANSWERS"
     })
   }
 
-  _displayCards() {
-    return _.shuffle(this.state.currentTweets).map((tweet, index) => {
+  _tweets() {
+    return _.shuffle(this.props.store.getState().currentTweets).map((tweet, index) => {
       return (
         <TweetCard
-        store={this.props.store}
-        content={tweet}
-        key={index}
-        id={index}
+          store={this.props.store}
+          content={tweet}
+          key={index}
+          id={index}
         />
       )
     })
@@ -119,16 +135,20 @@ class App extends React.Component {
     return (
       <div>
         <Button
-          name={"Button here"}
-          clickFunc={this._newTweet}
+          name={"Add store tweets"}
+          clickFunc={()=> {
+            this.props.store.dispatch({ type: "NEW_TWEETS" })
+          }}
         />
         <Button
-          name="Add Tweets"
-          clickFunc={this._addTweet}
+          name="Log Store"
+          clickFunc={() => {
+            console.log(this.props.store.getState())
+          }}
         />
-        <ReactCSSTransitionGroup {...transitionOptions}>
-          {this._displayCards()}
-        </ReactCSSTransitionGroup>
+
+          {this._tweets()}
+
       </div>
     )
   }
