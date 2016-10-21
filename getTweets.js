@@ -41,7 +41,6 @@ const getTweets = (params) => {
             }
             getTweets(newParams);
         } else {
-
           //clean up source files for front-end tweet retrieval and raw corpus
           fs.writeFile('src/js/data/rawTweets.js', '');
           fs.writeFile('src/js/data/rawTweetCorpus.js', '');

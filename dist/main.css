@@ -4,11 +4,22 @@ a {
   font-weight: normal;
 }
 
+button {
+  background-color: white;
+  color: black;
+}
+
+.tweetDiv {
+  display: flex;
+  justify-content: space-around;
+}
+
 blockquote.twitter-tweet {
-  display: inline-block;
+  /*display: inline-block;*/
+
   padding: 16px;
   margin: 10px 0;
-  max-width: 468px;
+  max-width: 450px;
   /*box-sizing: border-box;*/
   /*border: #ddd 1px solid;*/
   /*border-top-color: #eee;
@@ -18,6 +29,8 @@ blockquote.twitter-tweet {
   font: bold 14px/18px Helvetica, Arial, sans-serif;
   color: #000;
 }
+
+
 
 blockquote.twitter-tweet p {
   font: normal 18px/24px Georgia, "Times New Roman", Palatino, serif;
@@ -42,7 +55,34 @@ body {
 
 #root {
   margin-top: 20vh;
-  display: flex;
+  /*display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-around;*/
+}
+
+
+
+/*.tweetCard {
+  animation: cardRotate 1s linear backwards;
+}
+
+@keyframes cardRotate {
+  0% {
+    transform: rotateX(0deg);
+  }
+  50% {
+    transform: rotateX(180deg);
+  }
+  75% {
+    transform: rotateX(270deg);
+  }
+  100% {
+    transform: rotateX(360deg);
+  }
+}*/
+
+@media(max-width: 850px) {
+  .tweetDiv {
+    display: inline-block;
+  }
 }

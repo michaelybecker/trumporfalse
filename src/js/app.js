@@ -1,12 +1,17 @@
-
+// Libraries/plugins
 import React from "react";
 import ReactDOM from "react-dom";
+import ReactCSSTransitionGroup from "react-addons-css-transition-group"
 import { createStore, combineReducers } from "redux";
+import { Provider, connect } from "react-redux";
 import deepFreeze from "deepfreeze";
 import expect, { createSpy, spyOn, isSpy } from "expect";
-import TweetCard from "./TweetCard"
-import CreateFakeTweet from "./markovGenerator"
+import CreateFakeTweet from "./markovGenerator";
+import _ from "underscore"
 
+// Our Components:
+import TweetCard from "./TweetCard"
+import ScoreCard from "./ScoreCard"
 import Button from "./Button";
 import realTweetArray from "./data/realTweets";
 import fakeTweetArray from "./data/fakeTweets";
@@ -14,58 +19,55 @@ import fakeTweetArray from "./data/fakeTweets";
 const ranNum = (max) => {
   return Math.floor(Math.random() * max)
 }
+let score = 0;
+const answerVisibility = (state = {
+  answerVisibility: "HIDE_ANSWERS",
+  currentTweets: [],
+  score: 0
+}, action) => {
 
-const trumpApp = (state = [], action) => {
   switch (action.type) {
-    case "TRUE_TWEET_CLICKED":
-      console.log(store.getState())
-
-      return [
-        ...state,
-        {
-          id: action.id,
-          isReal: action.isReal
-        }
-
-      ]
-      break;
-    case "FAKE_TWEET_CLICKED":
+    case "RIGHT_ANSWER":
       return {
-        // stuff
+        ...state,
+        answerVisibility: "SHOW_ANSWER",
+        score: ++score
       }
-    case "EMPTY_STATE":
-      state = undefined
+    case "WRONG_ANSWER":
+      return {
+        ...state,
+        answerVisibility: "SHOW_ANSWER",
+        score: --score
+      }
+    case "SHOW_ANSWER":
+      return {
+        ...state,
+        answerVisibility: action.type,
+        score: score++
+      }
+    case "HIDE_ANSWERS":
+      return {
+        ...state,
+        answerVisibility: action.type
+      }
+    case "NEW_TWEETS":
+      return {
+        ...state,
+        currentTweets: _.shuffle([
+          realTweetArray[ranNum(3200)],
+          CreateFakeTweet()
+        ]),
+        answerVisibility: "HIDE_ANSWERS"
+      }
     default:
       return state;
   }
 }
-let idIndex = 0;
-const TestButton = () => {
-  return (
-    <button
-      onClick={() => {
-        store.dispatch({
-          type: "TRUE_TWEET_CLICKED",
-          isReal: true,
-          id: idIndex++
-        })}
-      }
-    >
-      Test Button
-    </button>
-  )
-}
 
-const GetStateButton = () => {
-  return (
-    <button
-      onClick={() => {console.log(store.getState())}
-      }
-    >
-      log state
-    </button>
-  )
-}
+// const trumpAppReducers = combineReducers({
+//   trumpApp,
+//   answerVisibility
+// })
 
 const EmptyStateButton = () => {
   return (
@@ -81,84 +83,89 @@ const EmptyStateButton = () => {
   )
 }
 
-const goodSites = [
-  "http://www.naacp.org/",
-  "https://www.hillaryclinton.com/",
-  "http://maldef.org/immigration/litigation/",
-  "https://www.plannedparenthood.org/",
-  "https://www.icrc.org/eng/resources/documents/misc/57jqgr.htm"
-]
 
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      realTweetIndex: ranNum(3200),
-      fakeTweetIndex: ranNum(3200)
-    }
-    this._newTweet = this._newTweet.bind(this);
-    this._makeUrl = this._makeUrl.bind(this);
+
+    this.store = this.props.store;
+    this.store.dispatch({
+      type: "NEW_TWEETS"
+    })
+    this.unsubscribe = this.store.subscribe(() => {
+      console.log(this.store.getState())
+      this.forceUpdate()
+    })
+
+    this._addTweet = this._addTweet.bind(this);
+    this._tweets = this._tweets.bind(this);
   }
 
-  _newTweet() {
+
+
+  _tweets() {
+    return this.store.getState().currentTweets.map((tweet, index) => {
+      return (
+        <TweetCard
+          store={this.props.store}
+          content={tweet}
+          key={index}
+          id={index}
+        />
+      )
+    })
+  }
+
+  _addTweet() {
     this.setState({
-      realTweetIndex: ranNum(3200),
-      fakeTweetIndex: ranNum(3200)
+      currentTweets: [
+        ...this.state.currentTweets,
+        CreateFakeTweet()
+      ]
     })
   }
 
 
-
-  _makeUrl(tweetObject) {
-    if (tweetObject.hasOwnProperty("id_str")) {
-      console.log("makeurl called")
-      return "https://twitter.com/realDonaldTrump/status/" + tweetObject.id_str
-    } else {
-      const goodSite = Math.floor(Math.random() * goodSites.length)
-      console.log("goodSites index: " + goodSite)
-      return goodSites[goodSite]
-    }
-
-  }
-
   render() {
-    console.log(realTweetArray[this.state.realTweetIndex])
-    console.log(fakeTweetArray[this.state.fakeTweetIndex])
-    const testStyle = {
-      backgroundColor: "green"
+    const transitionOptions = {
+      transitionName: "fade",
+      transitionEnterTimeout: 5000,
+      transitionLeaveTimeout: 5000
     }
 
     return (
-      <div>
-        <TestButton />
-        <GetStateButton />
-        <EmptyStateButton />
-        <Button
-          name={"Button here"}
-          clickFunc={this._newTweet}/>
-        <TweetCard
-          content={realTweetArray[this.state.realTweetIndex]}
-          url={this._makeUrl(realTweetArray[this.state.realTweetIndex])}
-          style={testStyle}
-        />
-        <TweetCard
-          content={CreateFakeTweet()}
-          url={this._makeUrl(fakeTweetArray[this.state.fakeTweetIndex])}
-          style={testStyle}/>
+      <div className="rootDiv">
+        <ScoreCard score={this.store.getState().score} />
+        <div className="tweetDiv">
+          {this._tweets()}
+        </div>
       </div>
     )
   }
 }
 
-const store = createStore(trumpApp)
+// const store = createStore(answerVisibility)
 
 const render = () => {
   ReactDOM.render(
-    <App />,
+    <App store={createStore(answerVisibility)} />,
     document.getElementById("root")
   )
 }
 
 render();
 
-export { store }
+// export { store }
+
+// <Button
+//   name={"Add store tweets"}
+//   clickFunc={()=> {
+//     this.store.dispatch({ type: "NEW_TWEETS" })
+//   }}
+// />
+// <Button
+//   name="Log Store"
+//   clickFunc={() => {
+//     console.log(this.store.getState())
+//   }}
+// />
