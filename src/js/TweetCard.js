@@ -1,5 +1,5 @@
 import React from "react";
-import dotDotifier from "./dotDotifier";
+// import dotDotifier from "./dotDotifier";
 // import { store } from "./app"
 
 const goodSites = [
@@ -16,6 +16,10 @@ class TweetCard extends React.Component {
   constructor(props){
     super(props)
     this._makeUrl = this._makeUrl.bind(this)
+    this._dotDotifier = this._dotDotifier.bind(this)
+    this._tweetClicked = this._tweetClicked.bind(this)
+    this._whichPortrait = this._whichPortrait.bind(this)
+    this._whichHandle = this._whichHandle.bind(this)
   }
 
   componentDidMount() {
@@ -39,39 +43,65 @@ class TweetCard extends React.Component {
     }
   }
 
+  _dotDotifier(tweet) {
+    if (tweet.split(" ").length < 5) {
+      console.log(this.props.content.isReal + " short tweet")
+      return tweet;
+    } else {
+      const textArr = tweet.split(" ")
+      return textArr.slice(0, textArr.length-2).join(" ").concat("...")
+    }
+  }
 
+  _tweetClicked(state, store) {
+    if (state.answerVisibility === "HIDE_ANSWERS") {
+      if (this.props.content.isReal === true) {
+        store.dispatch({
+          type: "RIGHT_ANSWER"
+        })
+      } else {
+        store.dispatch({
+          type: "WRONG_ANSWER"
+        })
+      }
+      setTimeout(() => {
+        store.dispatch({
+          type: "NEW_TWEETS"
+        })
+      }, 500)
+    }
+  }
+
+  _whichPortrait(state) {
+    if (state.answerVisibility === "HIDE_ANSWERS") {
+      return "http://i45.photobucket.com/albums/f98/llanginger/silhouette.jpg";
+    } else if (this.props.content.isReal === true) {
+      return "https://pbs.twimg.com/profile_images/1980294624/DJT_Headshot_V2_bigger.jpg";
+    } else {
+      return "http://i45.photobucket.com/albums/f98/llanginger/robotTrump.jpg";
+    }
+  }
+
+  _whichHandle(state) {
+    if (state.answerVisibility === "HIDE_ANSWERS") {
+      return "@?";
+    } else if (this.props.content.isReal === true) {
+      return "@realDonaldTrump";
+    } else {
+      return "@TrumpBot2k";
+    }
+  }
 
   render() {
-    const {store} = this.props;
+    const { store } = this.props;
     const state = store.getState();
-    const url = this._makeUrl()
 
-    const tweetClicked = () => {
-      if (state.answerVisibility === "HIDE_ANSWERS") {
-        if (this.props.content.isReal === true) {
-          store.dispatch({
-            type: "RIGHT_ANSWER"
-          })
-        } else {
-          store.dispatch({
-            type: "WRONG_ANSWER"
-          })
-        }
-        setTimeout(() => {
-          store.dispatch({
-            type: "NEW_TWEETS"
-          })
-        }, 1000)
-      }
-    }
-
-    let idIndex = 0;
     let cardStyles = {
       backgroundColor: "white"
     }
 
     if (state.answerVisibility === "HIDE_ANSWERS") {
-      cardStyles.border = "white 3px solid"
+      cardStyles.border = "#333 3px solid"
     } else if (state.answerVisibility === "SHOW_ANSWER") {
       if (this.props.content.isReal === true) {
         cardStyles.border = "#2ECC40 3px solid"
@@ -80,24 +110,21 @@ class TweetCard extends React.Component {
       }
     }
 
-    console.log(this.props.content.isReal + " tweetcard state: ")
-    console.log(state.answerVisibility)
-    console.log("==================")
 
     return (
       <div className="tweetCard">
         <blockquote
           className={"twitter-tweet"}
           style={cardStyles}
-          onClick={tweetClicked}
+          onClick={() => {this._tweetClicked(state, store)}}
         >
-          <img src="https://pbs.twimg.com/profile_images/1980294624/DJT_Headshot_V2_bigger.jpg" />
-          <p>{dotDotifier(this.props.content.text)}</p>
+          <img src={this._whichPortrait(state)} />
+          <p>{this._dotDotifier(this.props.content.text)}</p>
           <footer>
-              <cite>@realDonaldTrump</cite>
+              <cite>{this._whichHandle(state)}</cite>
           </footer>
           <a
-            href={url}
+            href={this._makeUrl()}
             target={"_blank"}>Link</a>
         </blockquote>
       </div>

@@ -134,7 +134,10 @@ class App extends React.Component {
 
     return (
       <div className="rootDiv">
-        <ScoreCard score={this.store.getState().score} />
+        <ScoreCard
+          className="scoreCard"
+          score={this.store.getState().score}
+        />
         <div className="tweetDiv">
           {this._tweets()}
         </div>
