@@ -13,8 +13,7 @@ import _ from "underscore"
 import TweetCard from "./TweetCard"
 import ScoreCard from "./ScoreCard"
 import Button from "./Button";
-import realTweetArray from "./data/realTweets";
-import fakeTweetArray from "./data/fakeTweets";
+import realTweetArray from "./data/rawTweets";
 
 const ranNum = (max) => {
   return Math.floor(Math.random() * max)

@@ -1,4 +1,5 @@
 import React from "react";
+import dotDotifier from "./dotDotifier";
 // import { store } from "./app"
 
 const goodSites = [
@@ -91,7 +92,7 @@ class TweetCard extends React.Component {
           onClick={tweetClicked}
         >
           <img src="https://pbs.twimg.com/profile_images/1980294624/DJT_Headshot_V2_bigger.jpg" />
-          <p>{this.props.content.text}</p>
+          <p>{dotDotifier(this.props.content.text)}</p>
           <footer>
               <cite>@realDonaldTrump</cite>
           </footer>
