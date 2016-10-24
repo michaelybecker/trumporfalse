@@ -11,6 +11,54 @@ const goodSites = [
   "https://www.icrc.org/eng/resources/documents/misc/57jqgr.htm"
 ]
 
+// const ImgWrapper = ({ title, styles, children }) => (
+//   <div className={styles}>
+//     {children}
+//   </div>
+// )
+//
+// const imgWrapperStyles = props => ({
+//   padding: 50,
+//   ':hover': {
+//     animationDuration: '500ms'
+//   },
+//   '@media (max-width: 800px)': {
+//     fontSize: '40px'
+//   },
+//   animation: props.name + " 2s infinite",
+//   width: "200px",
+//   height: "200px",
+//   backgroundColor: "blue"
+// })
+//
+// const animation = props => ({
+//   '0%': {
+//     transform: "scale(1)"
+//   },
+//   '100%': {
+//     transform: "scale(" + props.scale + ")"
+//   },
+// })
+//
+// const mapStylesToProps = function(props) {
+//   return function(renderer) {
+//     return renderer.renderRule(imgWrapperStyles, {
+//       name: renderer.renderKeyframe(animation, { scale: 2 })
+//     })
+//   }
+// }
+//
+// connect(mapStylesToProps)(ImgWrapper)
+
+// const ImgWrapper = createComponent(props => ({
+//   "> img": {
+//     transform: "scale(.5)",
+//     transform: props.answerVisibility === "SHOW_ANSWER" ? "scale(1)" : "scale(.5)",
+//     transition: "all .2s cubic-bezier(.39,.04,.43,1.89)"
+//   }
+// }), "div")
+
+
 
 class TweetCard extends React.Component {
 

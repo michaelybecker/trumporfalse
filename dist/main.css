@@ -1,3 +1,7 @@
+* {
+  font: normal 18px/24px Georgia, "Times New Roman", Palatino, serif;
+}
+
 a {
   font-size: 12px;
   color: #666;
@@ -29,6 +33,8 @@ blockquote.twitter-tweet {
   padding: 16px;
   margin: 10px 0;
   max-width: 450px;
+  height: 170px;
+  min-width: 350px;
   /*box-sizing: border-box;*/
   /*border: #ddd 1px solid;*/
   /*border-top-color: #eee;
@@ -62,12 +68,6 @@ blockquote.twitter-tweet img {
   background-color: #7FDBFF;
 }*/
 
-#root {
-  margin-top: 20vh;
-  /*display: flex;
-  align-items: center;
-  justify-content: space-around;*/
-}
 
 
 

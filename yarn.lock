@@ -1694,6 +1694,12 @@ fbjs@^0.8.4:
     promise "^7.1.1"
     ua-parser-js "^0.7.9"
 
+fela:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/fela/-/fela-3.0.1.tgz#23694cbdf1b5253c9c160af8553148144bba04d8"
+  dependencies:
+    hyphenate-style-name "1.0.1"
+
 filename-regex@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/filename-regex/-/filename-regex-2.0.0.tgz#996e3e80479b98b9897f15a8a58b3d084e926775"
@@ -2014,6 +2020,10 @@ https-browserify@~0.0.0:
 https-browserify@0.0.0:
   version "0.0.0"
   resolved "https://registry.yarnpkg.com/https-browserify/-/https-browserify-0.0.0.tgz#b3ffdfe734b2a3d4a9efd58e8654c91fce86eafd"
+
+hyphenate-style-name@1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/hyphenate-style-name/-/hyphenate-style-name-1.0.1.tgz#bc49b9446e02b4570641afdd29c1ce7609d1b9cc"
 
 iconv-lite@~0.4.13:
   version "0.4.13"
@@ -3046,6 +3056,10 @@ react-addons-css-transition-group@^15.3.2:
 react-dom@^15.3.2:
   version "15.3.2"
   resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-15.3.2.tgz#c46b0aa5380d7b838e7a59c4a7beff2ed315531f"
+
+react-fela:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/react-fela/-/react-fela-3.0.1.tgz#60859b674041da7461f7983cbbc3c60f91f54bd6"
 
 react-redux@^4.0.0, react-redux@^4.4.5:
   version "4.4.5"
