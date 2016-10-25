@@ -7,7 +7,11 @@ import { createStore, applyMiddleware } from "redux";
 import thunk from "redux-thunk";
 import logger from "redux-logger";
 import { Provider, connect } from "react-redux";
+import deepFreeze from "deepfreeze";
+import expect, { createSpy, spyOn, isSpy } from "expect";
+import CreateFakeTweet from "./markovGenerator";
 import _ from "underscore"
+const AjaxPromise = require('ajax-promise');
 
 // Our Components:
 import reducers from "./store"
@@ -18,7 +22,71 @@ import ScoreCounter from "./ScoreCounter";
 import Social from "./Social"
 import { OverlayWin, OverlayNewGame } from "./OverlayCard"
 
-const middleware = applyMiddleware(thunk, logger())
+const ranNum = (max) => {
+  return Math.floor(Math.random() * max)
+}
+const getFakeTweet = () => {
+  AjaxPromise
+    .get('/fakeTweet')
+    .then(function (response) {
+      let fakeTweet = response;
+      console.log(fakeTweet);
+      // return(fakeTweet);
+
+    })
+return({text:"hi", isReal:false});
+  }
+
+
+let score = 0;
+const answerVisibility = (state = {
+  answerVisibility: "HIDE_ANSWERS",
+  currentTweets: [],
+  score: 0
+}, action) => {
+
+  switch (action.type) {
+    case "RIGHT_ANSWER":
+      return {
+        ...state,
+        answerVisibility: "SHOW_ANSWER",
+        score: ++score
+      }
+    case "WRONG_ANSWER":
+      return {
+        ...state,
+        answerVisibility: "SHOW_ANSWER",
+        score: --score
+      }
+    case "SHOW_ANSWER":
+      return {
+        ...state,
+        answerVisibility: action.type,
+        score: score++
+      }
+    case "HIDE_ANSWERS":
+      return {
+        ...state,
+        answerVisibility: action.type
+      }
+    case "NEW_TWEETS":
+      return {
+        ...state,
+        currentTweets: _.shuffle([
+          realTweetArray[ranNum(3200)],
+          getFakeTweet()
+        ]),
+        answerVisibility: "HIDE_ANSWERS"
+      }
+    default:
+      return state;
+  }
+}
+
+// const trumpAppReducers = combineReducers({
+//   trumpApp,
+//   answerVisibility
+// })
 
 const EmptyStateButton = () => {
   return (
@@ -55,8 +123,6 @@ class App extends React.Component {
     this._tweets = this._tweets.bind(this);
     this._chooseOverlay = this._chooseOverlay.bind(this);
   }
-
-
 
   _tweets() {
     return this.store.getState().currentTweets.map((tweet, index) => {
@@ -110,6 +176,14 @@ class App extends React.Component {
         style={overlayTitleStyles}
         />)
     }
+
+  _addTweet() {
+    this.setState({
+      currentTweets: [
+        ...this.state.currentTweets,
+        getFakeTweet()
+      ]
+    })
   }
 
   render() {

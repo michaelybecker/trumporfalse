@@ -5,14 +5,25 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+<<<<<<< 3704f65d2635f14801d1769fa6bb13c20bda812b
     "watch-js": "make watch-js",
     "build-libs": "make build-libs",
+||||||| merged common ancestors
+    "watch-js": "watchify -v -e src/js/app.js -t [ babelify --presets [ es2015 react stage-2 ] ] --debug -o dist/app.js",
+=======
+    "watch-js": "watchify -v -e src/js/app.js -t [ babelify --presets [ es2015 react stage-2 ] ] --debug -o dist/app.js",
+    "serve": "node dist/server.js",
+    "make-server": "babel --presets es2015 server.js -d dist",
+>>>>>>> midway thru refactor, async problem
     "build-js": "browserify -v -e src/js/app.js -t [ babelify --presets [ es2015 react stage-2 ] ] -o dist/app.js",
-    "markov-watch": "watchify -v -e src/js/markovGenerator.js -t [ babelify --presets [ es2015 react ] ] -o dist/markovGenerator.js"
+    "markov-watch": "babel --presets es2015 ./src/js/markovGenerator.js -d dist",
+    "rawtweets-watch": "babel --presets es2015 ./src/js/data/rawTweets.js -d dist",
+    "rawtweetcorpus-watch": "babel --presets es2015 ./src/js/data/rawTweetCorpus.js -d dist"
   },
   "author": "Leo Langinger & Michael Hazani",
   "license": "MIT",
   "dependencies": {
+    "ajax-promise": "^0.8.1",
     "async": "^2.1.1",
     "classnames": "^2.2.5",
     "express": "^4.14.0",

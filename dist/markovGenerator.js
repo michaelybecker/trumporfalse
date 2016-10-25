@@ -1,35 +1,28 @@
 "use strict";
-import realTweetArray from "./data/realTweets";
-let MarkovChain = require('markovchain');
-//Only for text file generation
-// let fs = require('fs');
 
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+var corpus = require("./data/rawTweetCorpus.js");
+var MarkovChain = require('markovchain');
 
-// ----------------------------------------------------------------------------------------
-// Markov Chain Trump tweet generator
+var CreateFakeTweet = function CreateFakeTweet() {
+    //Creates a fake tweet.
 
-// Generate the raw REAL tweets file. Only needs to happen once.
-// for (let i = 0; i < realTweetArray.length; i++) {
-//     const tweet = realTweetArray[i].text;
-//     fs.appendFile("realTweetsRaw.txt", tweet);
-// }
-
-//Create a fake tweet.
-
-const CreateFakeTweet = () => {
-
-    const randFirstWord = () => {
-        const firstWords = ["The", "I", "If", "thank", "you", "America"];
+    var randFirstWord = function randFirstWord() {
+        var firstWords = ["The", "I", "If", "thank", "you", "America"];
+        // const firstWords = ["Hillary", "Crooked", "media", "CNN", "you", "fat"];
         return firstWords[Math.floor(Math.random() * firstWords.length)];
-    }
+    };
 
-    const randSentenceLength = () => {
-        return Math.floor(Math.random() * 20) + 7;
-    }
+    var randSentenceLength = function randSentenceLength() {
+        return Math.floor(Math.random() * 30) + 20;
+    };
 
-    let rawTweetsMarkov = new MarkovChain(fs.readFileSync('./data/realTweetsRaw.txt', 'utf8'));
-    const tweet = rawTweetsMarkov.start(randFirstWord()).end(randSentenceLength()).process();
-    console.log(tweet);
-}
+    var rawTweetsMarkov = new MarkovChain(corpus.default);
+    var tweet = rawTweetsMarkov.start(randFirstWord()).end(randSentenceLength()).process();
+    return { text: tweet, isReal: false };
+};
 
-export default CreateFakeTweet;
+//test
+exports.default = CreateFakeTweet;

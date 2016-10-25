@@ -1,7 +1,14 @@
 import React from "react";
+
 import { createComponent } from "react-fela";
 import { connect } from 'react-fela'
 // import ImgWrapper from "./ImgWrapper"
+
+// import dotDotifier from "./dotDotifier";
+// import { store } from "./app"
+
+import dotDotifier from "./dotDotifier";
+import { store } from "./app"
 
 const goodSites = [
   "http://www.naacp.org/",
@@ -132,8 +139,6 @@ class TweetCard extends React.Component {
         cardStyles.border = "#FF4136 3px solid"
       }
     }
-
-
     return (
       <div
         className="tweetCard">
@@ -153,5 +158,14 @@ class TweetCard extends React.Component {
     )
   }
 }
+
+// const t = React.PropTypes
+
+// TweetCard.propTypes = {
+//   content: t.shape({
+//     text: t.string.isRequired,
+//     isReal: t.bool.isRequired
+//   }).isRequired
+// }
 
 export default TweetCard

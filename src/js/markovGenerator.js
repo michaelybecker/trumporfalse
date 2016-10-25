@@ -1,5 +1,5 @@
 "use strict";
-import corpus from "./data/rawTweetCorpus.js";
+let corpus = require("./data/rawTweetCorpus.js");
 let MarkovChain = require('markovchain');
 
 const CreateFakeTweet = () => {
@@ -15,9 +15,10 @@ const CreateFakeTweet = () => {
         return Math.floor(Math.random() * 30) + 20;
     }
 
-    const rawTweetsMarkov = new MarkovChain(corpus);
+    const rawTweetsMarkov = new MarkovChain(corpus.default);
     const tweet = rawTweetsMarkov.start(randFirstWord()).end(randSentenceLength()).process();
     return {text: tweet, isReal: false};
 }
-console.log(CreateFakeTweet());
-export default CreateFakeTweet;
+
+//test
+exports.default = CreateFakeTweet;

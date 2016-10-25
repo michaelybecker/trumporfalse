@@ -21,5 +21,5 @@ app.listen(process.env.PORT || 3000, function () {
 // console.log(markovGenerator.default());
 app.get("/fakeTweet", function (req, res) {
   console.log("sending tweet! \n " + markovGenerator.default());
-res.send(markovGenerator.default());
+  res.send(markovGenerator.default());
 });
