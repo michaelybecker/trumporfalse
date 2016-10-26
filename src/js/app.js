@@ -3,7 +3,9 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { createRenderer } from 'fela'
 import { Provider as FelaProvider } from 'react-fela';
-import { createStore, combineReducers } from "redux";
+import { createStore, combineReducers, applyMiddleware } from "redux";
+import thunk from "redux-thunk";
+import logger from "redux-logger";
 import { Provider, connect } from "react-redux";
 import _ from "underscore"
 
@@ -14,11 +16,14 @@ import Button from "./Button";
 import CreateFakeTweet from "./markovGenerator";
 import realTweetArray from "./data/rawTweets";
 
+const middleware = applyMiddleware(thunk, logger())
+
 const ranNum = (max) => {
   return Math.floor(Math.random() * max)
 }
+
 let score = 0;
-const answerVisibility = (state = {
+const answerReducer = (state = {
   answerVisibility: "HIDE_ANSWERS",
   currentTweets: [],
   score: 0
@@ -72,9 +77,14 @@ const answerVisibility = (state = {
   }
 }
 
-// const trumpAppReducers = combineReducers({
-//   trumpApp,
-//   answerVisibility
+const tweetReducer = (state = [], action) => {
+
+}
+
+
+// const reducers = combineReducers({
+//   answerVisibility,
+//   tweets
 // })
 
 const EmptyStateButton = () => {
@@ -179,7 +189,7 @@ class App extends React.Component {
       backgroundColor: "#FFDB19",
       WebkitFilter: "opacity(90%)",
       filter: "opacity(90%)",
-      display: this.store.getState().score > 2 ? "block" : "none"
+      display: this.store.getState().score > 10 ? "block" : "none"
     }
 
     const overlayTitleStyles = {
@@ -195,7 +205,7 @@ class App extends React.Component {
       height: "50%",
       width: "50%",
       backgroundColor: "white",
-      display: this.store.getState().score > 2 ? "block" : "none"
+      display: this.store.getState().score > 10 ? "block" : "none"
     }
 
 
@@ -226,7 +236,7 @@ const mountNode = document.getElementById('stylesheet')
 const render = () => {
   ReactDOM.render(
     <FelaProvider renderer={renderer} mountNode={mountNode}>
-      <App store={createStore(answerVisibility)} />
+      <App store={createStore(answerReducer, middleware)} />
     </FelaProvider>,
     document.getElementById("root")
   )

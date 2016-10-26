@@ -17,7 +17,7 @@ class TweetCard extends React.Component {
   constructor(props){
     super(props)
     this._makeUrl = this._makeUrl.bind(this)
-    this._dotDotifier = this._dotDotifier.bind(this)
+    this._tweetFormatter = this._tweetFormatter.bind(this)
     this._tweetClicked = this._tweetClicked.bind(this)
     this._whichPortrait = this._whichPortrait.bind(this)
     this._whichHandle = this._whichHandle.bind(this)
@@ -44,13 +44,19 @@ class TweetCard extends React.Component {
     }
   }
 
-  _dotDotifier(tweet) {
+  _tweetFormatter(tweet) {
+    const limitTweetLength = (thisTweet) => {
+      if (thisTweet.length > 140) {
+        return thisTweet.substr(0, 139)
+      } else {
+        return thisTweet;
+      }
+    }
     if (tweet.split(" ").length < 5) {
-      console.log(this.props.content.isReal + " short tweet")
-      return tweet;
+      return limitTweetLength(tweet);
     } else {
       const textArr = tweet.split(" ")
-      return textArr.slice(0, textArr.length-2).join(" ").concat("...")
+      return limitTweetLength(textArr.slice(0, textArr.length-2).join(" ")).concat("...")
     }
   }
 
@@ -120,7 +126,7 @@ class TweetCard extends React.Component {
           onClick={() => {this._tweetClicked(state, store)}}
         >
           <img src={this._whichPortrait(state)} />
-          <p>{this._dotDotifier(this.props.content.text)}</p>
+          <p>{this._tweetFormatter(this.props.content.text)}</p>
           <footer>
               <cite>{this._whichHandle(state)}</cite>
           </footer>
