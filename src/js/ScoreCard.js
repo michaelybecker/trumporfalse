@@ -11,7 +11,7 @@ class ScoreCard extends React.Component {
       border: "3px solid #333",
       padding: "5px 10px",
       textAlign: "center",
-      width: "500px",
+      maxWidth: "450px",
       display: "inline-block",
       marginLeft: "auto",
       marginRight: "auto",
@@ -23,7 +23,7 @@ class ScoreCard extends React.Component {
       border: (this.props.score >= 0) ? "#2ECC40 1px solid" : "#FF4136 1px solid",
       padding: "0px 5px"
     }
-    // 
+    //
     // if (this.props.score >== 10) {
     //
     // }

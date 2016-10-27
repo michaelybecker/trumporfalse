@@ -9,18 +9,35 @@ a {
 }
 
 html {
-  background: url(https://c8.staticflickr.com/8/7047/6987705239_2ae3614afe_z.jpg) no-repeat center center fixed;
+  background: url(http://www.telegraph.co.uk/content/dam/investing/2016/09/01/706672_gold-bars_MONEY-xlarge_trans++IkUhv7k5mil0w0oeVCztIgidJvfuFJmBq3TREsU3sqM.jpg) no-repeat center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
 }
 
-button {
-  background-color: white;
+.button {
+  margin-top: 20px;
+  background-color: #FFDB19;
+  border: none;
+  border-radius: 5px;
+  padding: 15px;
   color: black;
+  box-shadow: 5px 5px 10px #B29911;
+  transition: all 60ms ease-in;
 }
 
+.button:hover {
+  transform: translateX(4px) translateY(4px);
+  box-shadow: 1px 1px 10px #B29911;
+}
+
+.button:active {
+  outline: none;
+  border: none;
+  transform: translate(2px);
+  box-shadow: 3px 3px 10px #B29911;
+}
 
 .tweetDiv {
   display: flex;
@@ -29,16 +46,12 @@ button {
 
 blockquote.twitter-tweet {
   /*display: inline-block;*/
-
+  box-sizing: border-box;
   padding: 16px;
   margin: 10px 0;
   max-width: 450px;
-  height: 170px;
-  min-width: 350px;
-  /*box-sizing: border-box;*/
-  /*border: #ddd 1px solid;*/
-  /*border-top-color: #eee;
-  border-bottom-color: #bbb;*/
+  max-height: 170px;
+  /*min-width: 400px;*/
   border-radius: 5px;
   box-shadow: 0 1px 3px rgba(0,0,0,0.15);
   font: bold 14px/18px Helvetica, Arial, sans-serif;
@@ -94,5 +107,13 @@ blockquote.twitter-tweet img {
   .tweetDiv {
     flex-direction: column;
     align-items: center;
+  }
+}
+
+@media(max-width: 660px) {
+  blockquote.twitter-tweet {
+    width: 100%;
+    margin-left: 0;
+    margin-right: 0;
   }
 }

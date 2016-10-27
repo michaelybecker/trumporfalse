@@ -81,11 +81,11 @@ class TweetCard extends React.Component {
 
   _whichPortrait(state) {
     if (state.answerVisibility === "HIDE_ANSWERS") {
-      return "http://i45.photobucket.com/albums/f98/llanginger/silhouette.jpg";
+      return "https://cdn2.iconfinder.com/data/icons/interface-part-2/32/question-mark-128.png";
     } else if (this.props.content.isReal === true) {
       return "https://pbs.twimg.com/profile_images/1980294624/DJT_Headshot_V2_bigger.jpg";
     } else {
-      return "http://i45.photobucket.com/albums/f98/llanginger/robotTrump.jpg";
+      return "http://www.clker.com/cliparts/1/1/9/2/12065738771352376078Arnoud999_Right_or_wrong_5.svg.med.png";
     }
   }
 
