@@ -25,11 +25,13 @@ const answerVisibility = (state = "HIDE_ANSWERS", action) => {
       return state;
   }
 }
-const testReducer = (state=[], action) => {
+
+const gameState = (state = "INITIAL_STATE", action) => {
   switch(action.type) {
-    case "RIGHT_ANSWER":
-      console.log("test reducer got action")
-      break;
+    case "INITIAL_STATE":
+      return action.type;
+    case "NEW_GAME":
+      return action.type;
     default:
       return state;
   }
@@ -71,7 +73,8 @@ const tweetReducer = (state = [], action) => {
 const reducers = combineReducers({
   answerVisibility,
   currentTweets: tweetReducer,
-  score: scoreReducer
+  score: scoreReducer,
+  gameState
 })
 
 export default reducers;

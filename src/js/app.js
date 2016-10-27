@@ -14,16 +14,11 @@ import reducers from "./store"
 import TweetCard from "./TweetCard"
 import ScoreCard from "./ScoreCard"
 import Button from "./Button";
-import CreateFakeTweet from "./markovGenerator";
-import realTweetArray from "./data/rawTweets";
 import ScoreCounter from "./ScoreCounter";
+import Social from "./Social"
+import { OverlayWin, OverlayNewGame } from "./OverlayCard"
 
 const middleware = applyMiddleware(thunk, logger())
-
-const ranNum = (max) => {
-  return Math.floor(Math.random() * max)
-}
-
 
 const EmptyStateButton = () => {
   return (
@@ -39,28 +34,8 @@ const EmptyStateButton = () => {
   )
 }
 
-const Social = props => (
-  <div className="social-buttons">
-    <a href="#" target="_blank" className="social-button facebook">
-      <i className="fa fa-facebook"></i>
-    </a>
-    <a href="#" target="_blank" className="social-button twitter">
-      <i className="fa fa-twitter"></i>
-    </a>
-  </div>
-)
-
 const Overlay = props => (
   <div style={ props.style }></div>
-)
-
-const OverlayTitle = props => (
-  <div style={ props.style }>
-    <h1>YOU WON!</h1>
-    <h3>Please like/share and have a great day!</h3>
-    <Social />
-    <button onClick={props.onClick} className="button" >Play Again!</button>
-  </div>
 )
 
 class App extends React.Component {
@@ -77,8 +52,8 @@ class App extends React.Component {
       this.forceUpdate()
     })
 
-    this._addTweet = this._addTweet.bind(this);
     this._tweets = this._tweets.bind(this);
+    this._chooseOverlay = this._chooseOverlay.bind(this);
   }
 
 
@@ -96,15 +71,41 @@ class App extends React.Component {
     })
   }
 
-  _addTweet() {
-    this.setState({
-      currentTweets: [
-        ...this.state.currentTweets,
-        CreateFakeTweet()
-      ]
-    })
+  _chooseOverlay() {
+    const overlayTitleStyles = {
+      borderRadius: "5px",
+      border: "3px solid #B29911",
+      padding: "30px",
+      textAlign: "center",
+      position: "absolute",
+      margin: "auto",
+      top: 0,
+      bottom: 0,
+      right: 0,
+      left: 0,
+      height: "90vh",
+      width: "50%",
+      backgroundColor: "white",
+      display: this.store.getState().score > 10 ? "block" : "none"
+    }
+    if (this.store.getState().gameState === "INITIAL_STATE") {
+      return (<OverlayNewGame
+        store={this.store}
+        onClick={() => {
+          this.store.dispatch({type: "NEW_GAME"})
+        }}
+        style={overlayTitleStyles}
+        />)
+    } else {
+      return (<OverlayWin
+        onClick={() => {
+          this.store.dispatch({type: "NEW_GAME"})
+        }}
+        store={this.store}
+        style={overlayTitleStyles}
+        />)
+    }
   }
-
 
   render() {
     const transitionOptions = {
@@ -131,30 +132,14 @@ class App extends React.Component {
       display: this.store.getState().score > 10 ? "block" : "none"
     }
 
-    const overlayTitleStyles = {
-      borderRadius: "5px",
-      border: "3px solid #B29911",
-      padding: "30px",
-      textAlign: "center",
-      position: "absolute",
-      margin: "auto",
-      top: 0,
-      bottom: 0,
-      right: 0,
-      left: 0,
-      // height: "50%",
-      width: "50%",
-      backgroundColor: "white",
-      display: this.store.getState().score > 10 ? "block" : "none"
-    }
+
+
 
 
     return (
       <div className="rootDiv">
         <Overlay style={overlayStyles} />
-        <OverlayTitle style={overlayTitleStyles} onClick={() => {
-            this.props.store.dispatch({type: "NEW_GAME"})
-          }}/>
+        {this._chooseOverlay()}
         <div
           className="scoreDiv"
           style={scoreDivStyles}
