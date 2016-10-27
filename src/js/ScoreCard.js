@@ -33,7 +33,6 @@ class ScoreCard extends React.Component {
         style={scoreStyles}>
         <h2>Donald Trump&#39;s tweetbot, TrumpBOT2k, has gone a little crazy</h2>
         <h2>Can you figure out which tweets are real?</h2>
-        <h3>Your score is: <span style={scoreSpanStyles}>{this.props.score}</span></h3>
       </div>
     )
   }

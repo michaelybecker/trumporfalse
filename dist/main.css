@@ -40,8 +40,16 @@ html {
 }
 
 .tweetDiv {
+  padding: 10px;
   display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
   justify-content: space-around;
+  background-color: #555;
+}
+
+.tweetDiv > div:first-child {
+  flex: 0 1 100%;
 }
 
 blockquote.twitter-tweet {
@@ -50,7 +58,7 @@ blockquote.twitter-tweet {
   padding: 16px;
   margin: 10px 0;
   max-width: 450px;
-  max-height: 170px;
+  max-height: 200px;
   /*min-width: 400px;*/
   border-radius: 5px;
   box-shadow: 0 1px 3px rgba(0,0,0,0.15);
@@ -115,5 +123,11 @@ blockquote.twitter-tweet img {
     width: 100%;
     margin-left: 0;
     margin-right: 0;
+  }
+  .scoreDiv {
+    margin-top: 0px;
+  }
+  blockquote.twitter-tweet p {
+    font: normal 14px/20px Georgia, "Times New Roman", Palatino, serif;
   }
 }

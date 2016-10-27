@@ -3,18 +3,20 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { createRenderer } from 'fela'
 import { Provider as FelaProvider } from 'react-fela';
-import { createStore, combineReducers, applyMiddleware } from "redux";
+import { createStore, applyMiddleware } from "redux";
 import thunk from "redux-thunk";
 import logger from "redux-logger";
 import { Provider, connect } from "react-redux";
 import _ from "underscore"
 
 // Our Components:
+import reducers from "./store"
 import TweetCard from "./TweetCard"
 import ScoreCard from "./ScoreCard"
 import Button from "./Button";
 import CreateFakeTweet from "./markovGenerator";
 import realTweetArray from "./data/rawTweets";
+import ScoreCounter from "./ScoreCounter";
 
 const middleware = applyMiddleware(thunk, logger())
 
@@ -22,73 +24,6 @@ const ranNum = (max) => {
   return Math.floor(Math.random() * max)
 }
 
-let score = 0;
-const answerVisibility = (state = "HIDE_ANSWERS", action) => {
-  switch (action.type) {
-    case "RIGHT_ANSWER":
-      return "SHOW_ANSWER"
-    case "WRONG_ANSWER":
-      return "SHOW_ANSWER"
-    case "SHOW_ANSWER":
-      return action.type
-    case "HIDE_ANSWERS":
-      return action.type
-    case "NEW_TWEETS":
-      return "HIDE_ANSWERS"
-    case "NEW_GAME":
-      return "HIDE_ANSWERS"
-    default:
-      return state;
-  }
-}
-const testReducer = (state=[], action) => {
-  switch(action.type) {
-    case "RIGHT_ANSWER":
-      console.log("test reducer got action")
-      break;
-    default:
-      return state;
-  }
-}
-const scoreReducer = (state = 100, action) => {
-  switch(action.type) {
-    case "RIGHT_ANSWER":
-      return ++state
-    case "WRONG_ANSWER":
-      return --state
-    case "SHOW_ANSWER":
-      return score++
-    case "NEW_GAME":
-      return 0;
-    case "TEST_WIN":
-      return 15;
-    default:
-      return state;
-  }
-}
-const tweetReducer = (state = [], action) => {
-  switch (action.type) {
-    case "NEW_TWEETS":
-      return _.shuffle([
-          realTweetArray[ranNum(3200)],
-          CreateFakeTweet()
-        ])
-    case "NEW_GAME":
-      return _.shuffle([
-          realTweetArray[ranNum(3200)],
-          CreateFakeTweet()
-        ])
-    default:
-      return state;
-  }
-}
-
-
-const reducers = combineReducers({
-  answerVisibility,
-  currentTweets: tweetReducer,
-  score: scoreReducer
-})
 
 const EmptyStateButton = () => {
   return (
@@ -181,7 +116,7 @@ class App extends React.Component {
     const scoreDivStyles = {
       display: "flex",
       marginBottom: "40px",
-      marginTop: "100px"
+      // marginTop: "100px"
     }
 
     const overlayStyles = {
@@ -207,7 +142,7 @@ class App extends React.Component {
       bottom: 0,
       right: 0,
       left: 0,
-      height: "50%",
+      // height: "50%",
       width: "50%",
       backgroundColor: "white",
       display: this.store.getState().score > 10 ? "block" : "none"
@@ -223,13 +158,13 @@ class App extends React.Component {
         <div
           className="scoreDiv"
           style={scoreDivStyles}
-        >
+          >
           <ScoreCard
             className="scoreCard"
-            score={this.store.getState().score}
           />
         </div>
         <div className="tweetDiv">
+          <ScoreCounter score={this.store.getState().score} />
           {this._tweets()}
         </div>
         <button onClick={() => {
