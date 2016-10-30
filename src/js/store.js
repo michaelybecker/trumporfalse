@@ -41,7 +41,11 @@ const scoreReducer = (state = 100, action) => {
     case "RIGHT_ANSWER":
       return ++state
     case "WRONG_ANSWER":
-      return --state
+      if (state > 0) {
+        return --state
+      } else {
+        return state
+      }
     case "SHOW_ANSWER":
       return score++
     case "NEW_GAME":

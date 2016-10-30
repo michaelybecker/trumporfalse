@@ -6,7 +6,7 @@ const CreateFakeTweet = () => {
     //Creates a fake tweet.
 
     const randFirstWord = () => {
-        const firstWords = ["The", "I", "If", "thank", "you", "America"];
+        const firstWords = ["The", "I", "If", "Thank", "You", "America"];
         // const firstWords = ["Hillary", "Crooked", "media", "CNN", "you", "fat"];
         return firstWords[Math.floor(Math.random() * firstWords.length)];
     }

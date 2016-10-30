@@ -1,13 +1,11 @@
 import React from "react";
 
 const Social = props => (
-  <div className="social-buttons">
-    <a href="#" target="_blank" className="social-button facebook">
-      <i className="fa fa-facebook"></i>
-    </a>
-    <a href="#" target="_blank" className="social-button twitter">
-      <i className="fa fa-twitter"></i>
-    </a>
+  <div>
+    <ul className="social-icons icon-circle list-unstyled list-inline">
+      <li> <a href="#"><i className="fa fa-facebook"></i></a></li>
+      <li> <a href="#"><i className="fa fa-twitter"></i></a></li>
+    </ul>
   </div>
 )
 

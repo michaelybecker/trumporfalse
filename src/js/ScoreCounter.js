@@ -9,17 +9,18 @@ class ScoreCounter extends React.Component {
       background: "white",
       border: "3px solid black",
       borderRadius: "5px",
-      display: "inline-block",
-      width: "100%"
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      height: "40px"
     }
     let scoreSpanStyles = {
-      border: (this.props.score >= 0) ? "#2ECC40 1px solid" : "#FF4136 1px solid",
       padding: "0px 5px"
     }
 
     return (
-      <div style={scoreCounterStyles}>
-        <h3>Your score is: <span style={scoreSpanStyles}>{this.props.score}</span></h3>
+      <div className="scoreCounter" style={scoreCounterStyles}>
+        <h3><span style={scoreSpanStyles}>{this.props.score} out of 5</span></h3>
       </div>
     )
   }

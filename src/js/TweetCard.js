@@ -11,6 +11,10 @@ const goodSites = [
   "https://www.icrc.org/eng/resources/documents/misc/57jqgr.htm"
 ]
 
+const tweetCardStyles = {
+
+}
+
 
 class TweetCard extends React.Component {
 
@@ -21,6 +25,7 @@ class TweetCard extends React.Component {
     this._tweetClicked = this._tweetClicked.bind(this)
     this._whichPortrait = this._whichPortrait.bind(this)
     this._whichHandle = this._whichHandle.bind(this)
+    this._link = this._link.bind(this)
   }
 
   componentDidMount() {
@@ -75,7 +80,7 @@ class TweetCard extends React.Component {
         store.dispatch({
           type: "NEW_TWEETS"
         })
-      }, 500)
+      }, 2500)
     }
   }
 
@@ -99,6 +104,17 @@ class TweetCard extends React.Component {
     }
   }
 
+  _link(state) {
+    if (this.props.content.isReal === true && state.answerVisibility === "SHOW_ANSWER") {
+      return (
+        <a
+          href={this._makeUrl()}
+          target={"_blank"}>Link
+        </a>
+      )
+    }
+  }
+
   render() {
     const { store } = this.props;
     const state = store.getState();
@@ -119,7 +135,8 @@ class TweetCard extends React.Component {
 
 
     return (
-      <div className="tweetCard">
+      <div
+        className="tweetCard">
         <blockquote
           className={"twitter-tweet"}
           style={cardStyles}
@@ -130,10 +147,7 @@ class TweetCard extends React.Component {
           <footer>
               <cite>{this._whichHandle(state)}</cite>
           </footer>
-          <a
-            href={this._makeUrl()}
-            target={"_blank"}>Link
-          </a>
+          {this._link(state)}
         </blockquote>
       </div>
     )

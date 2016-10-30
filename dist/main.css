@@ -9,11 +9,7 @@ a {
 }
 
 html {
-  background: url(http://www.telegraph.co.uk/content/dam/investing/2016/09/01/706672_gold-bars_MONEY-xlarge_trans++IkUhv7k5mil0w0oeVCztIgidJvfuFJmBq3TREsU3sqM.jpg) no-repeat center center fixed;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
+  background: #FFDB19;
 }
 
 .button {
@@ -24,7 +20,7 @@ html {
   padding: 15px;
   color: black;
   box-shadow: 5px 5px 10px #B29911;
-  transition: all 60ms ease-in;
+  transition: all 10ms ease-in;
 }
 
 .button:hover {
@@ -40,17 +36,27 @@ html {
 }
 
 .tweetDiv {
-  padding: 10px;
+  z-index: 0;
+  padding: 30px 10px;
+  position: absolute;
+  margin:auto;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  max-width: 970px;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: space-around;
-  background-color: #555;
+  justify-content: space-between;
 }
 
-.tweetDiv > div:first-child {
-  flex: 0 1 100%;
+.scoreCounter {
+  width: 100%;
 }
+/*.tweetDiv > div:first-child {
+  flex: 0 1 100%;
+}*/
 
 blockquote.twitter-tweet {
   /*display: inline-block;*/
@@ -58,7 +64,7 @@ blockquote.twitter-tweet {
   padding: 16px;
   margin: 10px 0;
   max-width: 450px;
-  max-height: 200px;
+  max-height: 235px;
   /*min-width: 400px;*/
   border-radius: 5px;
   box-shadow: 0 1px 3px rgba(0,0,0,0.15);
@@ -111,10 +117,19 @@ blockquote.twitter-tweet img {
   }
 }*/
 
-@media(max-width: 850px) {
+@media(max-width: 919px) {
   .tweetDiv {
     flex-direction: column;
     align-items: center;
+  }
+  .scoreCounter {
+    width: 450px;
+  }
+}
+
+@media(min-width: 919px) {
+  .tweetDiv {
+    padding-top: 120px;
   }
 }
 
@@ -129,5 +144,64 @@ blockquote.twitter-tweet img {
   }
   blockquote.twitter-tweet p {
     font: normal 14px/20px Georgia, "Times New Roman", Palatino, serif;
+  }
+}
+
+@media (max-width: 450px) {
+  .scoreCounter {
+    width: 100%;
+  }
+}
+
+@media (max-width: 320px) {
+  .tweetDiv {
+    padding: 30px 10px;
+  }
+}
+
+@media (max-width: 360px) {
+  .tweetDiv {
+    padding: 50px 10px;
+  }
+}
+
+@media (max-width: 320px) {
+  .tweetDiv {
+    padding: 30px 10px;
+  }
+}
+
+/* iPhone5 Landscape */
+@media only screen
+and (min-device-width : 320px)
+and (max-device-width : 568px)
+and (orientation : landscape) {
+  .tweetDiv {
+    flex-direction: right: justify-content;  ;
+: center;
+  }
+}
+
+
+/* iPhone6 Landscape */
+@media only screen
+and (min-device-width : 375px)
+and (max-device-width : 667px)
+and (orientation : landscape) {
+  .tweetDiv {
+    flex-direction: row;
+    justify-content: center;
+  }
+}
+
+/* iPhone6+ Landscape */
+
+@media only screen
+and (min-device-width : 414px)
+and (max-device-width : 736px)
+and (orientation : landscape) {
+  .tweetDiv {
+    flex-direction: row;
+    justify-content: center;
   }
 }

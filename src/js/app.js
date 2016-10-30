@@ -35,7 +35,7 @@ const EmptyStateButton = () => {
 }
 
 const Overlay = props => (
-  <div style={ props.style }></div>
+  <div style={ props.style } onClick={ props.onClick }></div>
 )
 
 class App extends React.Component {
@@ -75,6 +75,7 @@ class App extends React.Component {
     const overlayTitleStyles = {
       borderRadius: "5px",
       border: "3px solid #B29911",
+      zIndex: "40",
       padding: "30px",
       textAlign: "center",
       position: "absolute",
@@ -83,10 +84,12 @@ class App extends React.Component {
       bottom: 0,
       right: 0,
       left: 0,
-      height: "90vh",
+      height: "70vh",
       width: "50%",
       backgroundColor: "white",
-      display: this.store.getState().score > 10 ? "block" : "none"
+      display: this.store.getState().score > 4 ? "flex" : "none",
+      justifyContent: "center",
+      alignItems: "center"
     }
     if (this.store.getState().gameState === "INITIAL_STATE") {
       return (<OverlayNewGame
@@ -94,6 +97,7 @@ class App extends React.Component {
         onClick={() => {
           this.store.dispatch({type: "NEW_GAME"})
         }}
+        name="Start Game"
         style={overlayTitleStyles}
         />)
     } else {
@@ -102,6 +106,7 @@ class App extends React.Component {
           this.store.dispatch({type: "NEW_GAME"})
         }}
         store={this.store}
+        name="Play Again!"
         style={overlayTitleStyles}
         />)
     }
@@ -122,39 +127,31 @@ class App extends React.Component {
 
     const overlayStyles = {
       position: "absolute",
+      zIndex: "20",
       top: 0,
       left: 0,
       height: "100%",
       width: "100%",
-      backgroundColor: "#FFDB19",
+      backgroundColor: "#333",
       WebkitFilter: "opacity(90%)",
       filter: "opacity(90%)",
-      display: this.store.getState().score > 10 ? "block" : "none"
+      display: this.store.getState().score > 4 ? "block" : "none"
     }
-
-
-
-
 
     return (
       <div className="rootDiv">
-        <Overlay style={overlayStyles} />
+        <Overlay
+          style={overlayStyles}
+          onClick={() => {
+            this.store.dispatch({
+              type: "NEW_GAME"
+            })
+          }}/>
         {this._chooseOverlay()}
-        <div
-          className="scoreDiv"
-          style={scoreDivStyles}
-          >
-          <ScoreCard
-            className="scoreCard"
-          />
-        </div>
         <div className="tweetDiv">
           <ScoreCounter score={this.store.getState().score} />
           {this._tweets()}
         </div>
-        <button onClick={() => {
-            this.props.store.dispatch({type: "TEST_WIN"})
-          }}>TEST WIN</button>
       </div>
     )
   }
