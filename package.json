@@ -7,13 +7,17 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "watch-js": "make watch-js",
     "build-libs": "make build-libs",
-    "build-js": "browserify -v -e src/js/app.js -t [ babelify --presets [ es2015 react stage-2 ] ] -o dist/app.js",
-    "markov-watch": "watchify -v -e src/js/markovGenerator.js -t [ babelify --presets [ es2015 react ] ] -o dist/markovGenerator.js"
+    "build-js": "browserify -v -e src/client/app.js -t [ babelify --presets [ es2015 react stage-2 ] ] -o build/app.js",
+    "build-server": "babel src/server --out-dir build/server",
+    "build-assets": "make build-assets",
+    "server": "node build/server/server.js",
+    "markov-watch": "watchify -v -e src/server/markovGenerator.js -t [ babelify --presets [ es2015 react ] ] -o build/server/markovGenerator.js"
   },
   "author": "Leo Langinger & Michael Hazani",
   "license": "MIT",
   "dependencies": {
     "async": "^2.1.1",
+    "axios": "^0.15.2",
     "classnames": "^2.2.5",
     "express": "^4.14.0",
     "fela": "^3.0.1",

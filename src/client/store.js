@@ -1,11 +1,6 @@
 import { combineReducers } from "redux";
-import _ from "underscore"
-import CreateFakeTweet from "./markovGenerator";
-import realTweetArray from "./data/rawTweets";
 
-const ranNum = (max) => {
-  return Math.floor(Math.random() * max)
-}
+
 let score = 0;
 const answerVisibility = (state = "HIDE_ANSWERS", action) => {
   switch (action.type) {
@@ -59,15 +54,29 @@ const scoreReducer = (state = 100, action) => {
 const tweetReducer = (state = [], action) => {
   switch (action.type) {
     case "NEW_TWEETS":
-      return _.shuffle([
-          realTweetArray[ranNum(3200)],
-          CreateFakeTweet()
-        ])
+      return [
+        {
+          text: "tweet 1",
+          isReal: true,
+          id: 1513651
+        },
+        {
+          text: "tweet 2 false",
+          isReal: false
+        }
+      ]
     case "NEW_GAME":
-      return _.shuffle([
-          realTweetArray[ranNum(3200)],
-          CreateFakeTweet()
-        ])
+      return [
+        {
+          text: "tweet 1",
+          isReal: true,
+          id: 1513651
+        },
+        {
+          text: "tweet 2 false",
+          isReal: false
+        }
+      ]
     default:
       return state;
   }

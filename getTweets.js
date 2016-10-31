@@ -42,19 +42,19 @@ const getTweets = (params) => {
             getTweets(newParams);
         } else {
           //clean up source files for front-end tweet retrieval and raw corpus
-          fs.writeFile('src/js/data/rawTweets.js', '');
-          fs.writeFile('src/js/data/rawTweetCorpus.js', '');
+          fs.writeFile('assets/rawTweets.js', '');
+          fs.writeFile('assets/rawTweetCorpus.js', '');
 
 
           //for front-end
-          fs.appendFile('src/js/data/rawTweets.js', 'var realTweetArray = ')
-            fs.appendFile('src/js/data/rawTweets.js', JSON.stringify(tweetArray), (err) => {
+          fs.appendFile('assets/rawTweets.js', 'var realTweetArray = ')
+            fs.appendFile('assets/rawTweets.js', JSON.stringify(tweetArray), (err) => {
                 if (err) throw err;
                 console.log("tweet saved!");
             })
           //for Markov corpus
-          fs.writeFile('src/js/data/rawTweetCorpus.js', 'const corpus = ')
-            fs.appendFile('src/js/data/rawTweetCorpus.js', textArray, (err) => {
+          fs.writeFile('assets/rawTweetCorpus.js', 'const corpus = ')
+            fs.appendFile('assets/rawTweetCorpus.js', textArray, (err) => {
                 if (err) throw err;
                 console.log("tweet saved!");
             })
