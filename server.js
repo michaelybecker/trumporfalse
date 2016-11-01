@@ -1,6 +1,6 @@
 var express = require('express');
 var path = require('path');
-var CreateFakeTweet = require("./build/server/CreateFakeTweets")
+var CreateFakeTweet = require("/app/build/server/CreateFakeTweets.js")
 var app = express();
 
 app.use(express.static(path.join(__dirname, './build/client')));
