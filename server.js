@@ -1,21 +1,21 @@
 var express = require('express');
 var path = require('path');
-// var CreateFakeTweet = require("/CreateFakeTweets")
+var CreateFakeTweet = require("./build/servers/CreateFakeTweet")
 var app = express();
 
-var CreateFakeTweet = function() {
-  return [
-    {
-      text: "twet 1",
-      isReal: true,
-      id: 4684654
-    },
-    {
-      text: "Tweet 2",
-      isReal: false
-    }
-  ]
-}
+// var CreateFakeTweet = function() {
+//   return [
+//     {
+//       text: "tweet 1",
+//       isReal: true,
+//       id: 4684654
+//     },
+//     {
+//       text: "Tweet 2",
+//       isReal: false
+//     }
+//   ]
+// }
 
 app.use(express.static(path.join(__dirname, './build/client')));
 
@@ -31,6 +31,6 @@ app.listen(port, function(){
 })
 
 app.get("/getTweet", function (req, res) {
-  console.log("sending tweet! \n " + CreateFakeTweet());
-  res.send(CreateFakeTweet());
+  console.log("sending tweet! \n " + CreateFakeTweet().default);
+  res.send(CreateFakeTweet().default);
 });
