@@ -31,6 +31,6 @@ app.listen(port, function(){
 })
 
 app.get("/getTweet", function (req, res) {
-  console.log("sending tweet! \n " + CreateFakeTweet().default);
-  res.send(CreateFakeTweet().default);
+  console.log("sending tweet! \n " + CreateFakeTweet.default());
+  res.send(CreateFakeTweet.default());
 });
