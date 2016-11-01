@@ -3,20 +3,6 @@ var path = require('path');
 var CreateFakeTweet = require("./build/server/CreateFakeTweet")
 var app = express();
 
-// var CreateFakeTweet = function() {
-//   return [
-//     {
-//       text: "tweet 1",
-//       isReal: true,
-//       id: 4684654
-//     },
-//     {
-//       text: "Tweet 2",
-//       isReal: false
-//     }
-//   ]
-// }
-
 app.use(express.static(path.join(__dirname, './build/client')));
 
 // Listen for requests

@@ -35,6 +35,10 @@ html {
   box-shadow: 3px 3px 10px #B29911;
 }
 
+.button:focus {
+  outline: none;
+}
+
 .tweetDiv {
   z-index: 0;
   padding: 30px 10px;

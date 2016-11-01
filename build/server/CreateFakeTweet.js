@@ -15,6 +15,10 @@ var corpus = require("./strippedTweets.js");
 var MarkovChain = require('markovchain');
 var _ = require("underscore");
 
+String.prototype.capitalize = function () {
+    return this.charAt(0).toUpperCase() + this.slice(1);
+};
+
 var ranNum = function ranNum(max) {
     return Math.floor(Math.random() * max);
 };
@@ -33,7 +37,8 @@ var CreateFakeTweet = function CreateFakeTweet() {
     };
 
     var rawTweetsMarkov = new MarkovChain(corpus.default);
-    var tweet = rawTweetsMarkov.start(randFirstWord()).end(randSentenceLength()).process();
+    var tweet = rawTweetsMarkov.start(randFirstWord()).end(randSentenceLength()).process().capitalize();
+
     return _.shuffle([_rawTweets2.default[ranNum(3200)], { text: tweet, isReal: false }]);
 };
 

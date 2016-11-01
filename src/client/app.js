@@ -81,7 +81,6 @@ class App extends React.Component {
   _chooseOverlay() {
     const overlayTitleStyles = {
       borderRadius: "5px",
-      border: "3px solid #B29911",
       zIndex: "40",
       padding: "30px",
       textAlign: "center",
