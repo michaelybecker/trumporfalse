@@ -1,6 +1,7 @@
 import React from "react";
 import { createComponent } from "react-fela";
-import { connect } from 'react-fela'
+import { connect } from 'react-fela';
+import axios from "axios";
 // import ImgWrapper from "./ImgWrapper"
 
 const goodSites = [
@@ -77,8 +78,14 @@ class TweetCard extends React.Component {
         })
       }
       setTimeout(() => {
-        store.dispatch({
-          type: "NEW_TWEETS"
+        store.dispatch((dispatch) => {
+          dispatch({type: "GETTING_TWEETS"})
+          axios.get("/getTweet").then((response) => {
+            dispatch({
+              type: "NEW_TWEETS",
+              payload: response.data
+            })
+          })
         })
       }, 2500)
     }

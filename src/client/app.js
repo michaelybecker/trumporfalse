@@ -7,6 +7,7 @@ import { createStore, applyMiddleware } from "redux";
 import thunk from "redux-thunk";
 import logger from "redux-logger";
 import { Provider, connect } from "react-redux";
+import axios from "axios";
 import _ from "underscore"
 
 // Our Components:
@@ -43,8 +44,14 @@ class App extends React.Component {
     super(props);
 
     this.store = this.props.store;
-    this.store.dispatch({
-      type: "NEW_TWEETS"
+    this.store.dispatch((dispatch) => {
+      dispatch({type: "GETTING_TWEETS"})
+      axios.get("/getTweet").then((response) => {
+        dispatch({
+          type: "NEW_TWEETS",
+          payload: response.data
+        })
+      })
     })
 
     this.unsubscribe = this.store.subscribe(() => {
@@ -95,7 +102,15 @@ class App extends React.Component {
       return (<OverlayNewGame
         store={this.store}
         onClick={() => {
-          this.store.dispatch({type: "NEW_GAME"})
+          this.store.dispatch((dispatch) => {
+            dispatch({type: "GETTING_TWEETS"})
+            axios.get("/getTweet").then((response) => {
+              dispatch({
+                type: "NEW_GAME",
+                payload: response.data
+              })
+            })
+          })
         }}
         name="Start Game"
         style={overlayTitleStyles}
@@ -103,7 +118,15 @@ class App extends React.Component {
     } else {
       return (<OverlayWin
         onClick={() => {
-          this.store.dispatch({type: "NEW_GAME"})
+          this.store.dispatch((dispatch) => {
+            dispatch({type: "GETTING_TWEETS"})
+            axios.get("/getTweet").then((response) => {
+              dispatch({
+                type: "NEW_GAME",
+                payload: response.data
+              })
+            })
+          })
         }}
         store={this.store}
         name="Play Again!"
@@ -152,6 +175,16 @@ class App extends React.Component {
           <ScoreCounter score={this.store.getState().score} />
           {this._tweets()}
         </div>
+        <button onClick={() => {
+            this.store.dispatch((dispatch) => {
+              dispatch({type: "FOO"})
+              axios.get("/getTweet")
+                  .then((response) => {
+                    console.log(response.data)
+                  })
+
+            })
+          }}>Test Async</button>
       </div>
     )
   }

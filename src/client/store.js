@@ -1,6 +1,7 @@
 import { combineReducers } from "redux";
 
 
+
 let score = 0;
 const answerVisibility = (state = "HIDE_ANSWERS", action) => {
   switch (action.type) {
@@ -54,29 +55,9 @@ const scoreReducer = (state = 100, action) => {
 const tweetReducer = (state = [], action) => {
   switch (action.type) {
     case "NEW_TWEETS":
-      return [
-        {
-          text: "tweet 1",
-          isReal: true,
-          id: 1513651
-        },
-        {
-          text: "tweet 2 false",
-          isReal: false
-        }
-      ]
+      return action.payload
     case "NEW_GAME":
-      return [
-        {
-          text: "tweet 1",
-          isReal: true,
-          id: 1513651
-        },
-        {
-          text: "tweet 2 false",
-          isReal: false
-        }
-      ]
+      return action.payload
     default:
       return state;
   }
