@@ -3,7 +3,8 @@
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-var corpus = require("./rawTweetCorpus.js");
+
+var corpus = require("./strippedTweets.js");
 import realTweetArray from "./rawTweets";
 var MarkovChain = require('markovchain');
 var _ = require("underscore")

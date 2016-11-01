@@ -58,7 +58,7 @@ class TweetCard extends React.Component {
         return thisTweet;
       }
     }
-    if (tweet.split(" ").length < 5) {
+    if (tweet.split(" ").length < 10) {
       return limitTweetLength(tweet);
     } else {
       const textArr = tweet.split(" ")

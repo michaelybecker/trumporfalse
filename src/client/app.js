@@ -166,8 +166,14 @@ class App extends React.Component {
         <Overlay
           style={overlayStyles}
           onClick={() => {
-            this.store.dispatch({
-              type: "NEW_GAME"
+            this.store.dispatch((dispatch) => {
+              dispatch({type: "GETTING_TWEETS"})
+              axios.get("/getTweet").then((response) => {
+                dispatch({
+                  type: "NEW_GAME",
+                  payload: response.data
+                })
+              })
             })
           }}/>
         {this._chooseOverlay()}
@@ -175,16 +181,6 @@ class App extends React.Component {
           <ScoreCounter score={this.store.getState().score} />
           {this._tweets()}
         </div>
-        <button onClick={() => {
-            this.store.dispatch((dispatch) => {
-              dispatch({type: "FOO"})
-              axios.get("/getTweet")
-                  .then((response) => {
-                    console.log(response.data)
-                  })
-
-            })
-          }}>Test Async</button>
       </div>
     )
   }
