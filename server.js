@@ -1,6 +1,6 @@
 var express = require('express');
 var path = require('path');
-var CreateFakeTweet = require("./build/servers/CreateFakeTweet")
+var CreateFakeTweet = require("./build/server/CreateFakeTweet")
 var app = express();
 
 // var CreateFakeTweet = function() {
