@@ -11,7 +11,7 @@
     "build-js": "browserify -v -e src/client/app.js -t [ babelify --presets [ es2015 react stage-2 ] ] -o build/app.js",
     "build-server": "babel src/server --out-dir build/server",
     "build-assets": "make build-assets",
-    "server": "node build/server/server.js",
+    "server": "node server.js",
     "markov-watch": "watchify -v -e src/server/markovGenerator.js -t [ babelify --presets [ es2015 react ] ] -o build/server/markovGenerator.js"
   },
   "author": "Leo Langinger & Michael Hazani",

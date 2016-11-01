@@ -1,13 +1,13 @@
 var express = require('express');
 var path = require('path');
-var CreateFakeTweet = require("./CreateFakeTweet")
+var CreateFakeTweet = require("./build/server/CreateFakeTweet")
 var app = express();
 
-app.use(express.static(path.join(__dirname, '../client')));
+app.use(express.static(path.join(__dirname, './build/client')));
 
 // Listen for requests
 app.get("/", function(req, res) {
-  res.sendFile(path.join(__dirname + "/index.html"))
+  res.sendFile(path.join(__dirname + "/build/server/index.html"))
 });
 
 let port = Number(process.env.PORT || 3000)
