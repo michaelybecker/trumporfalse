@@ -10,7 +10,7 @@ app.get("/", function(req, res) {
   res.sendFile(path.join(__dirname + "/build/server/index.html"))
 });
 
-let port = Number(process.env.PORT || 3000)
+var port = Number(process.env.PORT || 3000)
 
 app.listen(port, function(){
   console.log("Example app listening on port " + port);
