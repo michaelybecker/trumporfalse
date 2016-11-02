@@ -10,8 +10,8 @@ const OverlayNewGame = props => (
   <div style={ props.style }>
     <ul style={ listStyles }>
       <li><h1>TRUMP OR FALSE?</h1></li>
-      <li><h1>The TrumpBot2k is a robot that tries to tweet like Trump does</h1></li>
-      <li><h2>Can you tell the real tweets from the fake ones 5 times?</h2></li>
+      <li><h1>Trump or False is a <a href="https://en.wikipedia.org/wiki/Markov_chain" target="_blank">Markov chain</a> experiment to see what happens when you try to randomly generate tweets in Trump's style</h1></li>
+      <li><h2>Can you tell the real tweets from the fake ones?</h2></li>
       <li><button onClick={props.onClick} className="button">{props.name}</button></li>
     </ul>
   </div>

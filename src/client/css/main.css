@@ -3,9 +3,17 @@
 }
 
 a {
-  font-size: 12px;
-  color: #666;
-  font-weight: normal;
+  color: #3494ff;
+  text-decoration: none;
+}
+
+a:visited {
+  color: #3494ff;
+  text-decoration: none;
+}
+
+a:hover {
+  cursor: pointer;
 }
 
 html {
@@ -24,15 +32,15 @@ html {
 }
 
 .button:hover {
-  transform: translateX(4px) translateY(4px);
-  box-shadow: 1px 1px 10px #B29911;
+  background-color: #e6c300;
+
 }
 
 .button:active {
   outline: none;
   border: none;
-  transform: translate(2px);
-  box-shadow: 3px 3px 10px #B29911;
+  transform: translateX(4px) translateY(4px);
+  box-shadow: 1px 1px 10px #B29911;
 }
 
 .button:focus {
