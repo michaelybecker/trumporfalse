@@ -13,7 +13,7 @@
     "build-assets": "make build-assets",
     "clean": "make clean",
     "server": "node server.js",
-    "serve-build": "npm run build-server && npm run build-assets && npm run build-js",
+    "serve-build": "npm run build-server && npm run build-libs && npm run build-assets && npm run build-js",
     "heroku-postbuild": "npm run serve-build",
     "markov-watch": "watchify -v -e src/server/markovGenerator.js -t [ babelify --presets [ es2015 react ] ] -o build/server/markovGenerator.js"
   },
