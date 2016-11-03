@@ -21,20 +21,6 @@ import { OverlayWin, OverlayNewGame } from "./OverlayCard"
 
 const middleware = applyMiddleware(thunk, logger())
 
-const EmptyStateButton = () => {
-  return (
-    <button
-      onClick={() => {
-        store.dispatch({
-          type: "EMPTY_STATE"
-        })}
-      }
-    >
-      empty state
-    </button>
-  )
-}
-
 const Overlay = props => (
   <div style={ props.style } onClick={ props.onClick }></div>
 )
