@@ -17,17 +17,17 @@ var ranNum = function(max) {
   return Math.floor(Math.random() * max)
 }
 
-var CreateFakeTweet = function CreateFakeTweet() {
+var CreateFakeTweet = function() {
     //Creates a fake tweet.
 
-    var randFirstWord = function randFirstWord() {
+    var randFirstWord = function() {
         var firstWords = ["The", "I", "If", "thank", "you", "America"];
         // const firstWords = ["Hillary", "Crooked", "media", "CNN", "you", "fat"];
         return firstWords[Math.floor(Math.random() * firstWords.length)];
     };
 
-    var randSentenceLength = function randSentenceLength() {
-        return Math.floor(Math.random() * 30) + 20;
+    var randSentenceLength = function() {
+        return Math.floor(Math.random() * 15) + 5;
     };
 
     var rawTweetsMarkov = new MarkovChain(corpus.default);
