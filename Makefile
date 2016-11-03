@@ -12,6 +12,9 @@ build-libs:
 	browserify $(REQUIRE_MODULES) -o build/client/libs.js
 
 build-assets:
+	mkdir build
+	mkdir build/client
+	mkdir build/server
 	cp -r assets/ build/client/
 	cp src/server/index.html build/server/
 	cp src/client/css/buttonStyle.css build/client/
