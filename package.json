@@ -8,10 +8,12 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "watch-js": "make watch-js",
     "build-libs": "make build-libs",
-    "build-js": "browserify -v -e src/client/app.js -t [ babelify --presets [ es2015 react stage-2 ] ] -o build/app.js",
+    "build-js": "make build-js",
     "build-server": "babel src/server --out-dir build/server",
     "build-assets": "make build-assets",
+    "clean": "make clean",
     "server": "node server.js",
+    "serve-build": "npm run build-server && npm run build-assets && npm run build-js",
     "markov-watch": "watchify -v -e src/server/markovGenerator.js -t [ babelify --presets [ es2015 react ] ] -o build/server/markovGenerator.js"
   },
   "author": "Leo Langinger & Michael Hazani",

@@ -5,6 +5,9 @@ EXCLUDE_MODULES=-x Base64 -x JSONStream -x abbrev -x accepts -x acorn -x align-t
 watch-js:
 	watchify $(EXCLUDE_MODULES) -v -e src/client/app.js -t [ babelify --presets [ es2015 react stage-2 ] ] --debug -o build/client/app.js
 
+build-js:
+	browserify $(EXCLUDE_MODULES) -v -e src/client/app.js -t [ babelify --presets [ es2015 react stage-2 ] ] --debug -o build/client/app.js
+
 build-libs:
 	browserify $(REQUIRE_MODULES) -o build/client/libs.js
 
