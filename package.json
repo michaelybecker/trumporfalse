@@ -39,10 +39,10 @@
     "redux-thunk": "^2.1.0",
     "twitter": "^1.4.0",
     "twitter-node-client": "0.0.6",
-    "underscore": "^1.8.3"
+    "underscore": "^1.8.3",
+    "babel": "^6.5.2",
   },
   "devDependencies": {
-    "babel": "^6.5.2",
     "babel-cli": "^6.16.0",
     "babel-core": "^6.17.0",
     "babel-loader": "^6.2.5",
