@@ -1,3 +1,4 @@
 .codekit-cache
 node_modules
 build/
+npm-debug.log
