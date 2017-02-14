@@ -1,5 +1,6 @@
 import React from "react";
 
+// Simple component to display Github icon/link
 const Social = props => (
   <div>
     <ul className="social-icons icon-circle list-unstyled list-inline">

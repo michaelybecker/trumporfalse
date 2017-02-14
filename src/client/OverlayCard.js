@@ -1,11 +1,13 @@
 import React from "react";
 import Social from "./Social"
 
+// Style object
 const listStyles = {
   listStyleType: "none",
   paddingLeft: "0px"
 }
 
+// New Game overlay component
 const OverlayNewGame = props => (
   <div style={ props.style }>
     <ul style={ listStyles }>
@@ -17,6 +19,7 @@ const OverlayNewGame = props => (
   </div>
 )
 
+// Win condition overlay component
 const OverlayWin = props => (
   <div style={ props.style }>
     <ul style={ listStyles }>

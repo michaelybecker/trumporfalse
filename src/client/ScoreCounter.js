@@ -1,6 +1,6 @@
 import React from "react";
 
-
+// Simple score counter component. TODO: convert to stateless component
 class ScoreCounter extends React.Component {
 
   render() {

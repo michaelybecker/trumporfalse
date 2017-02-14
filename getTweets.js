@@ -1,3 +1,5 @@
+
+
 var Twitter = require("twitter");
 var fs = require("fs");
 
@@ -32,7 +34,7 @@ const getTweets = (params) => {
         }
         console.log(tweetArray.length)
         console.log(tweetArray[tweetArray.length - 1].id)
-        // console.log(tweets);
+				// Recurse, 200 at a time, through the most recent 3200 tweets (limits set by twitter)
         if (tweetArray.length < 3200) {
             const newParams = {
                 screen_name: "realDonaldTrump",

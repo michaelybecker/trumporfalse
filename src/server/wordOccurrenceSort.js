@@ -8,6 +8,8 @@ let corpusSplit = corpus.split(" ");
 
 let wordDic = {};
 console.log("creating word frequency dictionary..");
+
+// Populate word dictionary for Markov Chain
 for (let word in corpusSplit) {
     let currWord = corpusSplit[word];
 

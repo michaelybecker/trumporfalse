@@ -177,7 +177,7 @@ class App extends React.Component {
 const renderer = createRenderer()
 const mountNode = document.getElementById('stylesheet')
 
-// Main render function - includes Fela's "provider" component, though not much Fela is actually used.
+// Main render function - includes Fela's "provider" component, though Fela not used in current build.
 const render = () => {
   ReactDOM.render(
     <FelaProvider renderer={renderer} mountNode={mountNode}>
