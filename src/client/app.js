@@ -10,7 +10,7 @@ import { Provider, connect } from "react-redux";
 import axios from "axios";
 import _ from "underscore"
 
-// Our Components:
+// Custom Components:
 import reducers from "./store"
 import TweetCard from "./TweetCard"
 import ScoreCard from "./ScoreCard"
@@ -19,16 +19,20 @@ import ScoreCounter from "./ScoreCounter";
 import Social from "./Social"
 import { OverlayWin, OverlayNewGame } from "./OverlayCard"
 
+// Redux middleware
 const middleware = applyMiddleware(thunk, logger())
 
+// Simple overlay component. TODO: extract to its own component file
 const Overlay = props => (
   <div style={ props.style } onClick={ props.onClick }></div>
 )
 
+// Main React App component. TODO: extract/refactor bulk of this to its own component file
 class App extends React.Component {
-  constructor(props) {
-    super(props);
 
+  constructor(props) {
+		// Init component and fetch initial tweets
+    super(props);
     this.store = this.props.store;
     this.store.dispatch((dispatch) => {
       dispatch({type: "GETTING_TWEETS"})
@@ -40,17 +44,16 @@ class App extends React.Component {
       })
     })
 
+		// Configure redux "unsubscription"
     this.unsubscribe = this.store.subscribe(() => {
       console.log(this.store.getState())
       this.forceUpdate()
     })
-
     this._tweets = this._tweets.bind(this);
     this._chooseOverlay = this._chooseOverlay.bind(this);
   }
 
-
-
+	// Map array of tweets to their own "TweetCard" compoents
   _tweets() {
     return this.store.getState().currentTweets.map((tweet, index) => {
       return (
@@ -64,7 +67,10 @@ class App extends React.Component {
     })
   }
 
+	// Choose which overlay component to display. TODO: This could do with some tidying up
   _chooseOverlay() {
+
+		// Style object
     const overlayTitleStyles = {
       borderRadius: "5px",
       zIndex: "40",
@@ -83,6 +89,7 @@ class App extends React.Component {
       justifyContent: "center",
       alignItems: "center"
     }
+
     if (this.store.getState().gameState === "INITIAL_STATE") {
       return (<OverlayNewGame
         store={this.store}
@@ -121,18 +128,15 @@ class App extends React.Component {
   }
 
   render() {
-    const transitionOptions = {
-      transitionName: "fade",
-      transitionEnterTimeout: 5000,
-      transitionLeaveTimeout: 5000
-    }
 
+		// Style object
     const scoreDivStyles = {
       display: "flex",
       marginBottom: "40px",
       // marginTop: "100px"
     }
 
+		// Style object
     const overlayStyles = {
       position: "absolute",
       zIndex: "20",
@@ -174,6 +178,7 @@ class App extends React.Component {
 const renderer = createRenderer()
 const mountNode = document.getElementById('stylesheet')
 
+// Main render function - includes Fela's "provider" component, though not much Fela is actually used.
 const render = () => {
   ReactDOM.render(
     <FelaProvider renderer={renderer} mountNode={mountNode}>

@@ -1,8 +1,9 @@
 import { combineReducers } from "redux";
 
-
-
+// Init score on game load
 let score = 0;
+
+// Reducer in charge of handling displaying "right/wrong" answer info
 const answerVisibility = (state = "HIDE_ANSWERS", action) => {
   switch (action.type) {
     case "RIGHT_ANSWER":
@@ -22,6 +23,7 @@ const answerVisibility = (state = "HIDE_ANSWERS", action) => {
   }
 }
 
+// Initial game state reducer - can probably put init score here
 const gameState = (state = "INITIAL_STATE", action) => {
   switch(action.type) {
     case "INITIAL_STATE":
@@ -32,26 +34,30 @@ const gameState = (state = "INITIAL_STATE", action) => {
       return state;
   }
 }
-const scoreReducer = (state = 100, action) => {
+
+// Reducer in charge of
+const scoreReducer = (state = 0, action) => {
   switch(action.type) {
     case "RIGHT_ANSWER":
       return ++state
     case "WRONG_ANSWER":
+			// Decrease score unless score is currently 0
       if (state > 0) {
         return --state
       } else {
         return state
       }
     case "SHOW_ANSWER":
-      return score++
+      return ++score
     case "NEW_GAME":
+			// Reset score to 0 when player decides to play again
       return 0;
-    case "TEST_WIN":
-      return 15;
     default:
       return state;
   }
 }
+
+// Reducer in charge of loading new tweets to the GUI
 const tweetReducer = (state = [], action) => {
   switch (action.type) {
     case "NEW_TWEETS":
@@ -62,7 +68,6 @@ const tweetReducer = (state = [], action) => {
       return state;
   }
 }
-
 
 const reducers = combineReducers({
   answerVisibility,
