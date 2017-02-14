@@ -4,19 +4,6 @@ import { connect } from 'react-fela';
 import axios from "axios";
 // import ImgWrapper from "./ImgWrapper"
 
-const goodSites = [
-  "http://www.naacp.org/",
-  "https://www.hillaryclinton.com/",
-  "http://maldef.org/immigration/litigation/",
-  "https://www.plannedparenthood.org/",
-  "https://www.icrc.org/eng/resources/documents/misc/57jqgr.htm"
-]
-
-const tweetCardStyles = {
-
-}
-
-
 class TweetCard extends React.Component {
 
   constructor(props){
@@ -30,34 +17,36 @@ class TweetCard extends React.Component {
   }
 
   componentDidMount() {
+		// Set up redux subscription
     const { store } = this.props;
     this.unsubscribe = store.subscribe(() => {
       this.forceUpdate()
     })
-
   }
 
   componentWillUnmount() {
+		// Set up redux unsubscription
     this.unsubscribe();
   }
 
+	// Construct link url to "real" tweet
   _makeUrl() {
-    if (this.props.content.hasOwnProperty("id_str")) {
-      return "https://twitter.com/realDonaldTrump/status/" + this.props.content.id_str
-    } else {
-      const goodSite = Math.floor(Math.random() * goodSites.length)
-      return goodSites[goodSite]
-    }
+    return "https://twitter.com/realDonaldTrump/status/" + this.props.content.id_str
   }
 
+	// Format tweet contents
   _tweetFormatter(tweet) {
-    const limitTweetLength = (thisTweet) => {
+
+		// Ensure that no fake tweet can be longer than 140 chars
+		const limitTweetLength = (thisTweet) => {
       if (thisTweet.length > 140) {
         return thisTweet.substr(0, 139)
       } else {
         return thisTweet;
       }
     }
+
+		// If tweet is longer than 10 words, shorten it and concat "..." to it to help keep tweets similar in length. Not sure how impactful this truly is!
     if (tweet.split(" ").length < 10) {
       return limitTweetLength(tweet);
     } else {
@@ -66,6 +55,7 @@ class TweetCard extends React.Component {
     }
   }
 
+	// Handle clicking of tweet
   _tweetClicked(state, store) {
     if (state.answerVisibility === "HIDE_ANSWERS") {
       if (this.props.content.isReal === true) {
@@ -91,6 +81,7 @@ class TweetCard extends React.Component {
     }
   }
 
+	// Assign the correct thumbnail image to the real/fake tweets once answers are revealed
   _whichPortrait(state) {
     if (state.answerVisibility === "HIDE_ANSWERS") {
       return "https://cdn2.iconfinder.com/data/icons/interface-part-2/32/question-mark-128.png";
@@ -101,6 +92,7 @@ class TweetCard extends React.Component {
     }
   }
 
+	// Assign the correct handle to the real/fake tweets once the answers are revealed
   _whichHandle(state) {
     if (state.answerVisibility === "HIDE_ANSWERS") {
       return "@?";
@@ -111,6 +103,7 @@ class TweetCard extends React.Component {
     }
   }
 
+	// Construct link url for the "real" tweet once answers are revealed
   _link(state) {
     if (this.props.content.isReal === true && state.answerVisibility === "SHOW_ANSWER") {
       return (
@@ -130,6 +123,7 @@ class TweetCard extends React.Component {
       backgroundColor: "white"
     }
 
+		// Change border color based on answer visibility
     if (state.answerVisibility === "HIDE_ANSWERS") {
       cardStyles.border = "#333 3px solid"
     } else if (state.answerVisibility === "SHOW_ANSWER") {

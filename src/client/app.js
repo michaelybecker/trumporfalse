@@ -14,7 +14,6 @@ import _ from "underscore"
 import reducers from "./store"
 import TweetCard from "./TweetCard"
 import ScoreCard from "./ScoreCard"
-import Button from "./Button";
 import ScoreCounter from "./ScoreCounter";
 import Social from "./Social"
 import { OverlayWin, OverlayNewGame } from "./OverlayCard"

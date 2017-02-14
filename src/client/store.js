@@ -1,7 +1,7 @@
 import { combineReducers } from "redux";
 
 // Init score on game load
-let score = 0;
+let score = 4;
 
 // Reducer in charge of handling displaying "right/wrong" answer info
 const answerVisibility = (state = "HIDE_ANSWERS", action) => {
@@ -36,7 +36,7 @@ const gameState = (state = "INITIAL_STATE", action) => {
 }
 
 // Reducer in charge of
-const scoreReducer = (state = 0, action) => {
+const scoreReducer = (state = 100, action) => {
   switch(action.type) {
     case "RIGHT_ANSWER":
       return ++state
